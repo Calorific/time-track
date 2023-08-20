@@ -1,10 +1,15 @@
 import React from 'react'
-import AuthLayout from './components/layouts/authLayout'
+import AuthLayout from './layouts/authLayout'
 import RegisterPage from './components/pages/registerPage'
 import { Navigate } from 'react-router-dom'
 import LoginPage from './components/pages/loginPage'
+import MainLayout from './layouts/mainLayout'
 
 const routes = (isLoggedIn, location) => [
+  {
+    path: '',
+    element: <MainLayout />
+  },
   {
     path: 'auth',
     element: <AuthLayout />,

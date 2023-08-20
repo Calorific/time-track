@@ -1,15 +1,18 @@
 import React from 'react'
 import FormComponent from '../common/form/form'
 import TextField from '../common/form/textField'
-import Button from '../common/controls/button'
+import Button from '../common/app/button'
 import * as yup from 'yup'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import loginValidations from '../../validations/login'
 import CheckboxField from '../common/form/checkboxField'
+import { useDispatch } from 'react-redux'
+import { signUp } from '../../store/user'
 
 const LoginPage = () => {
+
   const handleSubmit = data => {
-    console.log(data)
+
   }
 
   const validationScheme = yup.object().shape(loginValidations)

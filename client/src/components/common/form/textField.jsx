@@ -20,10 +20,10 @@ const TextField = ({ type, name, value, onChange, label, placeholder, error, onK
 
   return (
     <div className='mb-4'>
-      <label htmlFor="first_name" className={getLabelClasses}>
+      <label htmlFor={name} className={getLabelClasses}>
         {label}
       </label>
-      <input type={type} name={name} value={value} onChange={handleChange} className={getInputClasses}
+      <input id={name} type={type} name={name} value={value} onChange={handleChange} className={getInputClasses}
          placeholder={placeholder} onKeyDown={onKeyDown} {...rest} />
       {error && <span className="text-sm text-red-600">{error}</span>}
     </div>
