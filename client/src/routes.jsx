@@ -8,7 +8,7 @@ import MainLayout from './layouts/mainLayout'
 const routes = (isLoggedIn, location) => [
   {
     path: '',
-    element: <MainLayout />
+    element: (isLoggedIn ? <MainLayout /> : <Navigate to='/auth/login' state={{ referer: location }} />)
   },
   {
     path: 'auth',
@@ -16,7 +16,7 @@ const routes = (isLoggedIn, location) => [
     children: [
       {
         path: '',
-        element: <Navigate to='login' />
+        element: <Navigate to='login' replace />
       },
       {
         path: 'register',
@@ -28,7 +28,7 @@ const routes = (isLoggedIn, location) => [
       },
       {
         path: '*',
-        element: <Navigate to='login' />
+        element: <Navigate to='login' replace />
       },
     ]
   },

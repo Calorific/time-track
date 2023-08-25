@@ -3,15 +3,14 @@ import config from 'config'
 import Token from '../models/Token.js'
 
 class TokenService {
-  async generate(payload) {
-    const accessToken = await jwt.sign(payload, config.get('accessSecretKey'), {
-      expiresIn: '1h'
+  async generateAccessToken(payload) {
+    return await jwt.sign(payload, config.get('accessSecretKey'), {
+      expiresIn: config.get('accessKeyExpiresMS')
     })
-    const refreshToken = await jwt.sign(payload, config.get('refreshSecretKey'))
+  }
 
-    return {
-      accessToken, refreshToken, expiresIn: 3600
-    }
+  async generateRefreshToken(payload) {
+    return await jwt.sign(payload, config.get('refreshSecretKey'))
   }
 
   async save(user, refreshToken) {
@@ -41,9 +40,9 @@ class TokenService {
     }
   }
 
-  async findToken(refreshToken) {
+  async findToken(user) {
     try {
-      return await Token.findOne({ refreshToken })
+      return await Token.findOne({ user })
     } catch (e) {
       return null
     }

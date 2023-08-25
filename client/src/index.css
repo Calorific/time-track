@@ -2,11 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-.authLayout {
-  width: 100vw;
-  height: 100vh;
-}
-
 .login {
   min-width: 450px;
 }

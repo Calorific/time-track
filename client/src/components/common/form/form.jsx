@@ -1,8 +1,9 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
+import { parseServerErrors } from '../../../utils/parseServerErrors'
 
-const FormComponent = ({ children, classes, validationScheme, onSubmit, defaultData }) => {
-  const [data, setData] = useState(defaultData || {})
+const FormComponent = ({ children, classes, validationScheme, onSubmit, defaultData, serverErrors }) => {
+  const [data, setData] = useState(defaultData)
   const [errors, setErrors] = useState({})
 
   const handleChange = useCallback(target => {
@@ -27,8 +28,8 @@ const FormComponent = ({ children, classes, validationScheme, onSubmit, defaultD
 
   const handleSubmit = e => {
     e.preventDefault()
-    if (!validate(data)) return
-
+    if (!validate(data))
+      return
     onSubmit(data)
   }
 
@@ -57,7 +58,7 @@ const FormComponent = ({ children, classes, validationScheme, onSubmit, defaultD
       ...child.props,
       onChange: handleChange,
       value: data[child.props.name] || '',
-      error: errors[child.props.name],
+      error: errors[child.props.name] || parseServerErrors(serverErrors[child.props.name]),
       onKeyDown: handleKeyDown,
     }
 
@@ -71,11 +72,17 @@ const FormComponent = ({ children, classes, validationScheme, onSubmit, defaultD
   )
 }
 
+FormComponent.defaultProps = {
+  defaultData: {},
+  serverErrors: {}
+}
+
 FormComponent.propTypes = {
   children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
   validationScheme: PropTypes.object,
   onSubmit: PropTypes.func,
   defaultData: PropTypes.object,
   classes: PropTypes.string,
+  serverErrors: PropTypes.object,
 }
 export default FormComponent

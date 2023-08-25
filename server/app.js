@@ -4,14 +4,16 @@ import config from 'config'
 import chalk from 'chalk'
 import cors from 'cors'
 import path from 'path'
-import Token from './models/Token.js'
 import router from './routes/index.js'
+import cookieParser from 'cookie-parser'
 
 const app = express()
 
+app.use(cookieParser(config.get('cookieSecretKey')))
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
-app.use(cors())
+app.use(cors({ credentials: true, origin: 'http://localhost:3000' }))
+
 
 app.use('/api/v1', router)
 
