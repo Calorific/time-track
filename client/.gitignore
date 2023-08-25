@@ -7,9 +7,9 @@
 /.pnp
 .pnp.js
 
-/config
-/config/default.json
-/config/production.json
+/src/config
+/src/config/default.json
+/src/config/production.json
 
 # testing
 /coverage
