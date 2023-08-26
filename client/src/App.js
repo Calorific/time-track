@@ -23,7 +23,6 @@ const App = () => {
     ;(async () => {
       if (keepLoggedIn && !currentUserData) {
         const data = await dispatch(loadCurrentUserData())
-        console.log(data)
         const errors = data?.errors
         if (errors) {
           toast.error(parseServerErrors(errors.message))
@@ -50,7 +49,7 @@ const App = () => {
     )
 
   return (
-    <div className="App w-screen h-screen">
+    <div className="App">
       {elements}
     </div>
   )

@@ -1,16 +1,14 @@
 import React from 'react'
-import { NavLink, Outlet } from 'react-router-dom'
-import Navbar from '../components/ui/navbar'
+import { Outlet } from 'react-router-dom'
+import Navbar from '../components/navbar/navbar'
 
 const MainLayout = () => {
 
   return (
-    <>
+    <div className='h-screen flex flex-col'>
       <Navbar />
-      <h1>App</h1>
-      <NavLink to={'auth/register'}>Регистрация</NavLink>
       <Outlet />
-    </>
+    </div>
   )
 }
 

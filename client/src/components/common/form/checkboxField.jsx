@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const CheckboxField = ({ type, name, value, onChange, label, error, ...rest }) => {
+const CheckboxField = ({ name, value, onChange, label, error, ...rest }) => {
   const handleChange = ({ target }) => {
     onChange({ name: target.name, value: target.checked })
   }
@@ -24,9 +24,8 @@ CheckboxField.propTypes = {
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   name: PropTypes.string.isRequired,
   label: PropTypes.string,
-  placeholder: PropTypes.string,
   onChange: PropTypes.func,
   error: PropTypes.string
 }
 
-export default CheckboxField
+export default React.memo(CheckboxField)

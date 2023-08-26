@@ -23,6 +23,9 @@ const usersSlice = createSlice({
       state.errors = action.payload
       state.loading = false
     },
+    currentProjectChanged: (state, action) => {
+      state.currentUser.currentProject = action.payload
+    },
     userLoggedOut: state => {
       state.currentUser = null
     }
@@ -30,10 +33,15 @@ const usersSlice = createSlice({
 })
 
 const { reducer: userReducer, actions } = usersSlice
-const { userRequested, userRequestSuccess, userRequestFailed, userLoggedOut } = actions
+const { userRequested, userRequestSuccess, userRequestFailed, userLoggedOut, currentProjectChanged } = actions
 
 export const clearUserData = () => dispatch => {
   dispatch(userLoggedOut())
+}
+
+export const changeCurrentProject = projectId => async dispatch => {
+  dispatch(currentProjectChanged(projectId))
+  await httpService.patch('/user', { currentProject: projectId })
 }
 
 export const addUserData = payload => dispatch => {
@@ -54,6 +62,8 @@ export const loadCurrentUserData = () => async dispatch => {
 
 export const getCurrentUser = () => state => state.user.currentUser
 
-export const getUserErrors = () => state => state.user.errors
+export const getUserProjects = () => state => state.user.currentUser?.projects
+export const getCurrentProject = () => state => state.user.currentUser?.projects?.find(p =>
+    p._id === state.user.currentUser.currentProject)
 
 export default userReducer

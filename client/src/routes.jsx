@@ -1,14 +1,21 @@
 import React from 'react'
 import AuthLayout from './layouts/authLayout'
-import RegisterPage from './components/pages/registerPage'
+import RegisterPage from './pages/registerPage'
 import { Navigate } from 'react-router-dom'
-import LoginPage from './components/pages/loginPage'
+import LoginPage from './pages/loginPage'
 import MainLayout from './layouts/mainLayout'
+import MainPage from './pages/mainPage'
 
 const routes = (isLoggedIn, location) => [
   {
     path: '',
-    element: (isLoggedIn ? <MainLayout /> : <Navigate to='/auth/login' state={{ referer: location }} />)
+    element: (isLoggedIn ? <MainLayout /> : <Navigate to='/auth/login' state={{ referer: location }} />),
+    children: [
+      {
+        path: '/',
+        element: <MainPage />
+      }
+    ]
   },
   {
     path: 'auth',

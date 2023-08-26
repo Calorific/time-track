@@ -40,7 +40,26 @@ authRouter.post('/signup', [
 
       const newUser = await User.create({
         ...req.body,
-        password: hashedPassword
+        password: hashedPassword,
+        projectTypes: ['Задача'],
+        projects: [
+          {
+            title: 'Test',
+            type: 'Задача',
+            description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Harum molestiae nostrum reprehenderit. Accusamus aliquid doloribus iure nesciunt nihil recusandae, rem.',
+            records: [
+              { description: 'Test description', startTime: 0, endTime: 3600 }
+            ]
+          },
+          {
+            title: 'Second project',
+            type: 'Задача',
+            description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero, possimus?',
+            records: [
+              { description: 'Test description', startTime: 0, endTime: 7200 }
+            ]
+          }
+        ]
       })
       const accessToken = await tokenService.generateAccessToken({ _id: newUser._id.toString() })
       const refreshToken = await tokenService.generateRefreshToken({ _id: newUser._id.toString() })
@@ -52,7 +71,7 @@ authRouter.post('/signup', [
 
       const user = clearUserFields(newUser)
 
-      return res.status(201).json({ user })
+      return res.status(201).json(user)
     } catch (e) {
       console.log(chalk.red('[SERVER ERROR]', e.message))
       return res.status(500).json({

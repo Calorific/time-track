@@ -1,8 +1,9 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 import { parseServerErrors } from '../../../utils/parseServerErrors'
 
 const FormComponent = ({ children, classes, validationScheme, onSubmit, defaultData, serverErrors }) => {
+  const form = useRef()
   const [data, setData] = useState(defaultData)
   const [errors, setErrors] = useState({})
 
@@ -13,7 +14,9 @@ const FormComponent = ({ children, classes, validationScheme, onSubmit, defaultD
     }))
   }, [setData])
 
+
   const validate = useCallback(data => {
+    if (!validationScheme) return true
     try {
       validationScheme.validateSync(data)
       setErrors({})
@@ -25,11 +28,12 @@ const FormComponent = ({ children, classes, validationScheme, onSubmit, defaultD
   }, [validationScheme, setErrors])
 
   const isValid = Object.keys(errors).length === 0
-
   const handleSubmit = e => {
     e.preventDefault()
     if (!validate(data))
       return
+
+    setData(defaultData)
     onSubmit(data)
   }
 
@@ -66,7 +70,7 @@ const FormComponent = ({ children, classes, validationScheme, onSubmit, defaultD
   })
 
   return (
-    <form onSubmit={handleSubmit} className={classes}>
+    <form onSubmit={handleSubmit} className={classes} ref={form}>
       {clonedElements}
     </form>
   )
