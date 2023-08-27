@@ -2,8 +2,7 @@ import { Schema, model } from 'mongoose'
 
 const recordSchema = new Schema({
   description: { type: String, required: true },
-  startTime: { type: Number, required: true },
-  endTime: { type: Number, required: true }
+  timeSpent: { type: Number, required: true }
 }, {
   timestamps: true
 })

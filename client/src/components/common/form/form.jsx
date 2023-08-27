@@ -54,11 +54,12 @@ const FormComponent = ({ children, classes, validationScheme, onSubmit, defaultD
   const clonedElements = React.Children.map(children, child => {
     let config = {}
 
-    if (child.props.type === 'submit')
+    if (['submit', 'button'].includes(child.props.type))
       config = { ...child.props, disabled: !isValid }
     else if (!child.props.name)
       throw new Error('Name property is required for field components')
-    else if (child.props.type !== 'submit') config = {
+    else
+      config = {
       ...child.props,
       onChange: handleChange,
       value: data[child.props.name] || '',

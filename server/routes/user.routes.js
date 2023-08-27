@@ -17,7 +17,7 @@ userRouter.get('/data', auth, async (req, res) => {
     return res.status(200).json(user)
   } catch (e) {
     return res.status(404).json({
-      errors: { message: serverErrors.notFound }
+      errors: { message: serverErrors.userNotFound }
     })
   }
 })
@@ -27,7 +27,12 @@ userRouter.patch('/', auth, async (req, res) => {
     await User.updateOne({ _id: req.userId }, { $set: req.body })
     return res.status(200).send()
   } catch (e) {
-    console.log(chalk.red('[SERVER ERROR in patch /user/]', e.message))
+    if (e.model)
+      return res.status(404).json({
+        errors: { message: serverErrors.userNotFound }
+      })
+
+    console.log(chalk.red('[SERVER ERROR PATCH /user/]', e.message))
     return res.status(500).json({
       errors: { message: serverErrors.internalError }
     })

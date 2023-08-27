@@ -48,7 +48,7 @@ authRouter.post('/signup', [
             type: 'Задача',
             description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Harum molestiae nostrum reprehenderit. Accusamus aliquid doloribus iure nesciunt nihil recusandae, rem.',
             records: [
-              { description: 'Test description', startTime: 0, endTime: 3600 }
+              { description: 'Test description', timeSpent: 3600 }
             ]
           },
           {
@@ -56,7 +56,7 @@ authRouter.post('/signup', [
             type: 'Задача',
             description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero, possimus?',
             records: [
-              { description: 'Test description', startTime: 0, endTime: 7200 }
+              { description: 'Test description', timeSpent: 5145 }
             ]
           }
         ]
@@ -73,7 +73,7 @@ authRouter.post('/signup', [
 
       return res.status(201).json(user)
     } catch (e) {
-      console.log(chalk.red('[SERVER ERROR]', e.message))
+      console.log(chalk.red('[SERVER ERROR POST /auth/signup]', e.message))
       return res.status(500).json({
         errors: { message: serverErrors.internalError }
       })
@@ -117,7 +117,7 @@ authRouter.post('/login', [
       const user = clearUserFields(dbUser)
       return res.status(200).json(user)
     } catch (e) {
-      console.log(chalk.red('[SERVER ERROR]', e.message))
+      console.log(chalk.red('[SERVER ERROR POST /auth/login]', e.message))
       return res.status(500).json({
         errors: { message: serverErrors.internalError }
       })
@@ -133,7 +133,7 @@ authRouter.post('/logout', async (req, res) => {
 
     res.status(200).send()
   } catch (e) {
-    console.log(chalk.red('[SERVER ERROR]', e.message))
+    console.log(chalk.red('[SERVER ERROR POST /auth/logout]', e.message))
     return res.status(500).json({
       errors: { message: serverErrors.internalError }
     })
@@ -159,7 +159,7 @@ authRouter.post('/refresh', async (req, res) => {
     res.cookie('accessToken', accessToken, { domain: 'localhost', path: '/' })
     return res.status(201).json({})
   } catch (e) {
-    console.log(chalk.red('[SERVER ERROR]', e.message))
+    console.log(chalk.red('[SERVER ERROR POST /auth/refresh]', e.message))
     return res.status(500).json({
       errors: { message: serverErrors.internalError }
     })

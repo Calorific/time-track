@@ -6,26 +6,22 @@ import FormComponent from '../common/form/form'
 import TextField from '../common/form/textField'
 import toast from 'react-hot-toast'
 
-const Countdown = ({ start, toggleStart }) => {
-  const [time, setTime] = useState(0)
+const Countdown = ({ start, toggleStart, onTimeChange, time }) => {
+  const [initialTime, setInitialTime] = useState(0)
 
   useEffect(() => {
     if (start) {
       const interval = setInterval(() => {
-        setTime(prevState => {
-          if (!prevState) {
-            toggleStart()
-            clearInterval(interval)
-            new Audio('/notification.mp3').play().then()
-            return 0
-          } else {
-            return prevState - 1
-          }
-        })
+        onTimeChange()
+
+        if (time + 1 === initialTime) {
+          clearInterval(interval)
+          toggleStart()
+        }
       }, 1000)
       return () => clearInterval(interval)
     }
-  }, [start, toggleStart])
+  }, [start, onTimeChange, time, initialTime, toggleStart])
 
   const handleSubmit = ({ hours, minutes, seconds }) => {
     hours = +hours || 0
@@ -33,11 +29,15 @@ const Countdown = ({ start, toggleStart }) => {
     seconds = +seconds || 0
 
     if (!start) {
-      if (hours + minutes + seconds < 1)
+      if (hours + minutes + seconds < 1 && !time)
         return toast.error('Вы должны ввести хотя бы одно положительное значение')
+
       const newTime = hours * 3600 + minutes * 60 + seconds
-      if (newTime !== time)
-        setTime(newTime)
+
+      if (newTime !== initialTime - time && newTime) {
+        setInitialTime(newTime)
+        onTimeChange(true)
+      }
     }
 
     toggleStart()
@@ -53,7 +53,7 @@ const Countdown = ({ start, toggleStart }) => {
       </FormComponent>
 
       <span className="border border-gray-700 text-3xl align-middle rounded" style={{ fontFamily: 'Lato, sans-serif' }}>
-        {formatTime(time, true)}
+        {formatTime(initialTime - time, true)}
       </span>
     </div>
   )
@@ -62,6 +62,8 @@ const Countdown = ({ start, toggleStart }) => {
 Countdown.propTypes = {
   start: PropTypes.bool,
   toggleStart: PropTypes.func,
+  onTimeChange: PropTypes.func,
+  time: PropTypes.number,
 }
 
 export default Countdown
