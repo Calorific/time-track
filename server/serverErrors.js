@@ -14,9 +14,10 @@ const serverErrors = {
   userNotFound: 'USER_NOT_FOUND',
   wrongPassword: 'WRONG_PASSWORD',
   maxLengthDescription: 'DESCRIPTION_MAX_LENGTH_250',
-  invalidTime: 'INVALID_TIE',
+  invalidTime: 'INVALID_TIME',
   timeRequired: 'TIME_REQUIRED',
-  projectNotFound: 'PROJECT_NOT_FOUND'
+  projectNotFound: 'PROJECT_NOT_FOUND',
+  networkError: 'ERR_NETWORK'
 }
 
 export default serverErrors

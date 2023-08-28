@@ -55,7 +55,7 @@ export const addRecord = payload => async dispatch => {
     dispatch(recordRequestSuccess({ id: payload.projectId, record: data }))
   } catch (e) {
     const data = e?.response?.data
-    dispatch(recordRequestFail(data?.errors || e.code))
+    dispatch(recordRequestFail(data?.errors || { message: e.code }))
     return data || { errors: { message: e.code } }
   }
 }
@@ -63,4 +63,6 @@ export const addRecord = payload => async dispatch => {
 export const getProjectRecords = id => state => state.records.entities[id]
 
 export const getRecordLoading = () => state => state.records.loading
+
+export const getRecordsErrors = () => state => state.records.errors
 export default recordsReducer

@@ -1,15 +1,15 @@
 import React, { useEffect } from 'react'
 import { useLocation, useNavigate, useRoutes } from 'react-router-dom'
 import routes from './routes'
-import toast from 'react-hot-toast'
 import { useDispatch, useSelector } from 'react-redux'
 import { loadCurrentUserData, getCurrentUser } from './store/user'
 import cookieService from './services/cookie.service'
 import Loader from './components/common/app/loader'
 import 'preline'
 import authService from './services/auth.service'
-import { parseServerErrors } from './utils/parseServerErrors'
 import { logOut } from './store/auth'
+import withToastErrors from './components/hoc/withToastErrors'
+import serverErrors from './serverErrors'
 
 const App = () => {
   const dispatch = useDispatch()
@@ -24,10 +24,8 @@ const App = () => {
       if (keepLoggedIn && !currentUserData) {
         const data = await dispatch(loadCurrentUserData())
         const errors = data?.errors
-        if (errors) {
-          toast.error(parseServerErrors(errors.message))
+        if (errors && errors.message !== serverErrors.networkError)
           dispatch(logOut(navigate))
-        }
       }
     })()
   }, [keepLoggedIn, currentUserData, dispatch, navigate])
@@ -55,4 +53,4 @@ const App = () => {
   )
 }
 
-export default App
+export default withToastErrors(App)

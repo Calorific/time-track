@@ -15,6 +15,7 @@ const CreateRecord = ({ time, currentProjectId }) => {
   const dispatch = useDispatch()
   const loading = useSelector(getRecordLoading())
   const [show, setShow] = useState(false)
+  const [recordErrors, setRecordErrors] = useState({})
 
   const validationScheme = yup.object().shape(recordValidations)
 
@@ -28,16 +29,20 @@ const CreateRecord = ({ time, currentProjectId }) => {
       </div>
     )
 
-  const onSubmit = async data => {
-    data.description ||= 'Без описания'
-    data.projectId = currentProjectId
-    data.time = parseTime(data.time)
+  const onSubmit = async payload => {
+    payload.description ||= 'Без описания'
+    payload.projectId = currentProjectId
+    payload.time = parseTime(payload.time)
 
-    const errors = await dispatch(addRecord(data))
+    const data = await dispatch(addRecord(payload))
+
+    if (data?.errors?.formErrors)
+      setRecordErrors(data.errors.formErrors)
   }
 
   return (
-    <FormComponent classes='px-4 md:px-5 pb-2 md:pb-3' validationScheme={validationScheme} onSubmit={onSubmit}>
+    <FormComponent classes='px-4 md:px-5 pb-2 md:pb-3' validationScheme={validationScheme} onSubmit={onSubmit}
+                   serverErrors={recordErrors}>
       <TextField name='description' label='Описание' />
       <TextField name='time' label='Затраченное время' placeholder={formatTime(time)} />
       <Button type='submit' text='Создать' classes='mr-2' />

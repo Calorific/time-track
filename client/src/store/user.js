@@ -61,7 +61,7 @@ export const changeCurrentProject = projectId => async dispatch => {
     await httpService.patch('/user', { currentProject: projectId })
   } catch (e) {
     const data = e?.response?.data
-    dispatch(userRequestFail(data?.errors || e.code))
+    dispatch(userRequestFail(data?.errors || { message: e.code }))
     return data || { errors: { message: e.code } }
   }
 }
@@ -74,12 +74,14 @@ export const loadCurrentUserData = () => async dispatch => {
     dispatch(addUserData(data))
   } catch (e) {
     const data = e?.response?.data
-    dispatch(userRequestFail(data?.errors || e.code))
+    dispatch(userRequestFail(data?.errors || { message: e.code }))
     return data || { errors: { message: e.code } }
   }
 }
 
 export const getCurrentUser = () => state => state.user.currentUser
 export const getCurrentProjectId = () => state => state.user.currentUser?.currentProject
+
+export const getUserErrors = () => state => state.user.errors
 
 export default userReducer

@@ -94,7 +94,7 @@ authRouter.post('/login', [
 
       if (!dbUser)
         return res.status(404).json({
-          errors: { formErrors: { email: serverErrors.notFound }}
+          errors: { formErrors: { email: serverErrors.userNotFound }}
         })
 
       const isValidPassword = await bcrypt.compare(password, dbUser.password)

@@ -11,8 +11,13 @@ const serverErrors = {
   internalError: 'INTERNAL_ERROR',
   agreementRequired: 'AGREEMENT_REQUIRED',
   unauthorized: 'UNAUTHORIZED',
-  notFound: 'NOT_FOUND',
-  wrongPassword: 'WRONG_PASSWORD'
+  userNotFound: 'USER_NOT_FOUND',
+  wrongPassword: 'WRONG_PASSWORD',
+  maxLengthDescription: 'DESCRIPTION_MAX_LENGTH_250',
+  invalidTime: 'INVALID_TIME',
+  timeRequired: 'TIME_REQUIRED',
+  projectNotFound: 'PROJECT_NOT_FOUND',
+  networkError: 'ERR_NETWORK'
 }
 
 export default serverErrors

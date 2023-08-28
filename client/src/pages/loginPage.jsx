@@ -8,8 +8,6 @@ import loginValidations from '../validations/login'
 import CheckboxField from '../components/common/form/checkboxField'
 import { useDispatch, useSelector } from 'react-redux'
 import { getAuthLoading, logIn } from '../store/auth'
-import toast from 'react-hot-toast'
-import { parseServerErrors } from '../utils/parseServerErrors'
 import Loader from '../components/common/app/loader'
 
 const LoginPage = () => {
@@ -21,11 +19,8 @@ const LoginPage = () => {
   const handleSubmit = async payload => {
     const data = await dispatch(logIn({ payload, navigate }))
 
-    if (data && data.errors) {
-      data.errors.message
-          ? toast.error(parseServerErrors(data.errors.message))
-          : setAuthErrors(data.errors.formErrors)
-    }
+    if (data?.errors?.formErrors)
+      setAuthErrors(data.errors.formErrors)
   }
 
   const defaultData = {
@@ -37,16 +32,18 @@ const LoginPage = () => {
   const validationScheme = yup.object().shape(loginValidations)
 
   return (
-      !authLoading ? <div className='max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 login'>
-        <h2 className='text-3xl'>Авторизация</h2>
-        <FormComponent classes='mt-4' onSubmit={handleSubmit} validationScheme={validationScheme} serverErrors={authErrors} defaultData={defaultData}>
-          <TextField name='email' label='Email' autoFocus />
-          <TextField name='password' type='password' label='Пароль' />
-          <CheckboxField name='keepLoggedIn' label='Оставаться в сети' />
-          <Button type='submit' text='Войти' />
-        </FormComponent>
-        <p>Еще нет аккаунта? <NavLink to='/auth/register' className='text-blue-600'>Зарегистрироваться</NavLink></p>
-      </div> : <Loader />
+    !authLoading ? <div className='max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 login'>
+      <h2 className='text-3xl'>Авторизация</h2>
+      <FormComponent classes='mt-4' onSubmit={handleSubmit} validationScheme={validationScheme}
+                     serverErrors={authErrors} defaultData={defaultData}
+      >
+        <TextField name='email' label='Email' autoFocus />
+        <TextField name='password' type='password' label='Пароль' />
+        <CheckboxField name='keepLoggedIn' label='Оставаться в сети' />
+        <Button type='submit' text='Войти' />
+      </FormComponent>
+      <p>Еще нет аккаунта? <NavLink to='/auth/register' className='text-blue-600'>Зарегистрироваться</NavLink></p>
+    </div> : <Loader />
   )
 }
 

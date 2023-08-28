@@ -29,7 +29,7 @@ const authSlice = createSlice({
       state.loading = false
       state.errors = {}
     },
-    authRequestFailed: (state, action) => {
+    authRequestFail: (state, action) => {
       state.errors = action.payload
       state.loading = false
     }
@@ -37,7 +37,7 @@ const authSlice = createSlice({
 })
 
 const { reducer: authReducer, actions } = authSlice
-const { authRequested, authRequestSuccess, authRequestFailed } = actions
+const { authRequested, authRequestSuccess, authRequestFail } = actions
 
 export const signUp = ({ payload, navigate }) => async dispatch => {
   dispatch(authRequested())
@@ -48,7 +48,7 @@ export const signUp = ({ payload, navigate }) => async dispatch => {
     navigate('/')
   } catch (e) {
     const data = e?.response?.data
-    dispatch(authRequestFailed(data?.errors || e.code))
+    dispatch(authRequestFail(data?.errors || { message: e.code }))
     return data || { errors: { message: e.code } }
   }
 }
@@ -62,7 +62,7 @@ export const logIn = ({ payload, navigate }) => async dispatch => {
     navigate('/')
   } catch (e) {
     const data = e?.response?.data
-    dispatch(authRequestFailed(data?.errors || e.code))
+    dispatch(authRequestFail(data?.errors || { message: e.code }))
     return data || { errors: { message: e.code } }
   }
 }
@@ -75,11 +75,13 @@ export const logOut = navigate => async dispatch => {
     navigate('/auth/login')
   } catch (e) {
     const data = e?.response?.data
-    dispatch(authRequestFailed(data?.errors || e.code))
+    dispatch(authRequestFail(data?.errors || { message: e.code }))
     return data || { errors: { message: e.code } }
   }
 }
 
 export const getAuthLoading = () => state => state.auth.loading
+
+export const getAuthErrors = () => state => state.auth.errors
 
 export default authReducer
