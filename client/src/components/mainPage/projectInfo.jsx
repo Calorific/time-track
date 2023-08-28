@@ -4,6 +4,7 @@ import { formatTime } from '../../utils/formatTime'
 import { getProjectTime } from '../../utils/getProjectTime'
 import { useSelector } from 'react-redux'
 import { getProjectRecords } from '../../store/records'
+import Badge from '../common/app/badge'
 
 const ProjectInfo = ({ currentProject }) => {
   const records = useSelector(getProjectRecords(currentProject?._id))
@@ -19,8 +20,9 @@ const ProjectInfo = ({ currentProject }) => {
 
   return (
     <div className="px-4 md:px-5 py-2 md:py-3">
-      <h3 className="text-lg font-bold text-gray-800 dark:text-white text-center">
+      <h3 className="text-lg font-bold text-gray-800 dark:text-white flex justify-center">
         {currentProject.title}
+        <Badge text={currentProject.type} />
       </h3>
       <p className='dark:text-gray-400'>
         На проект потрачено времени: {formatTime(getProjectTime(records))}
