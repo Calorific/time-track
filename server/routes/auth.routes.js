@@ -40,7 +40,26 @@ authRouter.post('/signup', [
 
       const newUser = await User.create({
         ...req.body,
-        password: hashedPassword
+        password: hashedPassword,
+        projectTypes: ['Задача'],
+        projects: [
+          {
+            title: 'Test',
+            type: 'Задача',
+            description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Harum molestiae nostrum reprehenderit. Accusamus aliquid doloribus iure nesciunt nihil recusandae, rem.',
+            records: [
+              { description: 'Test description', timeSpent: 3600 }
+            ]
+          },
+          {
+            title: 'Second project',
+            type: 'Задача',
+            description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero, possimus?',
+            records: [
+              { description: 'Test description', timeSpent: 5145 }
+            ]
+          }
+        ]
       })
       const accessToken = await tokenService.generateAccessToken({ _id: newUser._id.toString() })
       const refreshToken = await tokenService.generateRefreshToken({ _id: newUser._id.toString() })
@@ -52,9 +71,9 @@ authRouter.post('/signup', [
 
       const user = clearUserFields(newUser)
 
-      return res.status(201).json({ user })
+      return res.status(201).json(user)
     } catch (e) {
-      console.log(chalk.red('[SERVER ERROR]', e.message))
+      console.log(chalk.red('[SERVER ERROR POST /auth/signup]', e.message))
       return res.status(500).json({
         errors: { message: serverErrors.internalError }
       })
@@ -75,7 +94,7 @@ authRouter.post('/login', [
 
       if (!dbUser)
         return res.status(404).json({
-          errors: { formErrors: { email: serverErrors.notFound }}
+          errors: { formErrors: { email: serverErrors.userNotFound }}
         })
 
       const isValidPassword = await bcrypt.compare(password, dbUser.password)
@@ -98,7 +117,7 @@ authRouter.post('/login', [
       const user = clearUserFields(dbUser)
       return res.status(200).json(user)
     } catch (e) {
-      console.log(chalk.red('[SERVER ERROR]', e.message))
+      console.log(chalk.red('[SERVER ERROR POST /auth/login]', e.message))
       return res.status(500).json({
         errors: { message: serverErrors.internalError }
       })
@@ -114,7 +133,7 @@ authRouter.post('/logout', async (req, res) => {
 
     res.status(200).send()
   } catch (e) {
-    console.log(chalk.red('[SERVER ERROR]', e.message))
+    console.log(chalk.red('[SERVER ERROR POST /auth/logout]', e.message))
     return res.status(500).json({
       errors: { message: serverErrors.internalError }
     })
@@ -140,7 +159,7 @@ authRouter.post('/refresh', async (req, res) => {
     res.cookie('accessToken', accessToken, { domain: 'localhost', path: '/' })
     return res.status(201).json({})
   } catch (e) {
-    console.log(chalk.red('[SERVER ERROR]', e.message))
+    console.log(chalk.red('[SERVER ERROR POST /auth/refresh]', e.message))
     return res.status(500).json({
       errors: { message: serverErrors.internalError }
     })

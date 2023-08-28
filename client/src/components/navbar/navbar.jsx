@@ -30,7 +30,7 @@ const Navbar = () => {
   ]
 
   return (
-      <header className="flex flex-wrap sm:justify-start sm:flex-nowrap z-50 w-full bg-gray-50 border-b border-gray-200text-sm py-3 sm:py-0 dark:bg-gray-800 dark:border-gray-700">
+      <header className="flex flex-wrap sm:justify-start sm:flex-nowrap z-50 w-full bg-gray-50 border-b border-gray-200 text-sm py-3 sm:py-0 dark:bg-gray-800 dark:border-gray-700">
         <nav
             className="relative max-w-7xl w-full mx-auto px-4 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8"
             aria-label="Global"
@@ -57,7 +57,7 @@ const Navbar = () => {
               <Dropdown title={currentUser.name} items={dropdownItems} />
             </div>
           </div>
-          <div id="navbar-collapse-with-animation" className="hs-collapse absolute sm:relative bg-gray-50 p-4 pt-0 left-0 right-0 hidden overflow-hidden transition-all duration-300 basis-full grow sm:block">
+          <div id="navbar-collapse-with-animation" className="hs-collapse absolute sm:relative bg-gray-50 left-0 right-0 hidden overflow-hidden transition-all duration-300 basis-full grow sm:block">
             <div className="flex flex-col gap-y-4 gap-x-0 mt-5 sm:flex-row sm:items-center sm:justify-end sm:gap-y-0 sm:gap-x-7 sm:mt-0 sm:pl-7">
               <NavLink className={activeLinkCLasses} to="/" aria-current="page" end>
                 Home

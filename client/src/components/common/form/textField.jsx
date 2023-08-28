@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const TextField = ({ type, name, value, onChange, label, placeholder, error, onKeyDown, ...rest }) => {
+const TextField = ({ type, name, value, onChange, label, placeholder, error, onKeyDown, classes, ...rest  }) => {
   const handleChange = ({ target }) => {
     onChange({ name: target.name, value: target.value })
   }
@@ -10,7 +10,7 @@ const TextField = ({ type, name, value, onChange, label, placeholder, error, onK
       + (error ? 'text-red-600' : 'text-gray-900')
 
 
-  const getInputClasses = `bg-gray-50 border border-gray-300text-sm rounded-sm focus:ring-blue-500
+  const getInputClasses = `bg-gray-50 border border-gray-300 rounded-sm focus:ring-blue-500
     focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
     dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500
     ${error
@@ -19,10 +19,10 @@ const TextField = ({ type, name, value, onChange, label, placeholder, error, onK
   }`
 
   return (
-    <div className='mb-4'>
-      <label htmlFor={name} className={getLabelClasses}>
+    <div className={classes}>
+      {label && <label htmlFor={name} className={getLabelClasses}>
         {label}
-      </label>
+      </label>}
       <input id={name} type={type} name={name} value={value} onChange={handleChange} className={getInputClasses}
          placeholder={placeholder} onKeyDown={onKeyDown} {...rest} />
       {error && <span className="text-sm text-red-600">{error}</span>}
@@ -31,7 +31,8 @@ const TextField = ({ type, name, value, onChange, label, placeholder, error, onK
 }
 
 TextField.defaultProps = {
-  type: 'text'
+  type: 'text',
+  classes: 'mb-4'
 }
 
 TextField.propTypes = {
@@ -43,6 +44,7 @@ TextField.propTypes = {
   onChange: PropTypes.func.isRequired,
   error: PropTypes.string,
   onKeyDown: PropTypes.func,
+  classes: PropTypes.string,
 }
 
 export default React.memo(TextField)

@@ -27,11 +27,19 @@ export const parseServerErrors = error => {
       return 'Необходимо согласие'
     case serverErrors.unauthorized:
       return 'Вы не авторизованы'
-    case serverErrors.notFound:
+    case serverErrors.userNotFound:
       return 'Пользователь не найден'
     case serverErrors.wrongPassword:
       return 'Неверный пароль'
-    case 'ERR_NETWORK':
+    case serverErrors.maxLengthDescription:
+      return 'Описание не должно превышать 250 символов'
+    case serverErrors.invalidTime:
+      return 'Время введено некорректно'
+    case serverErrors.timeRequired:
+      return 'Необходимо указать время'
+    case serverErrors.projectNotFound:
+      return 'Проект не найден. Попробуйте позже'
+    case serverErrors.networkError:
       return 'Произошла ошибка соединения. Попробуйте позже'
     default:
       return 'На сервере произошла непредвиденная ошибка. Попробуйте позже'
