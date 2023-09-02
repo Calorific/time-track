@@ -1,8 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const Badge = ({ text, color, style }) => {
-  const classes = `inline-flex items-center gap-1.5 py-1.5 px-3 mx-2 rounded-full text-xs font-medium ${color} ${style}`
+const Badge = ({ text, color, externalClasses }) => {
+  const classes = `inline-flex items-center gap-1.5 py-1.5 px-3 mx-2 rounded-full text-xs font-medium ${color} ${externalClasses} `
 
   return (
     <span className={classes}>

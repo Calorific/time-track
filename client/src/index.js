@@ -15,8 +15,10 @@ const store = createStore()
 root.render(
     <Provider store={store}>
       <BrowserRouter>
-        <Toaster position='top-right' />
-        <App />
+        <React.StrictMode>
+          <Toaster position='top-right' />
+          <App />
+        </React.StrictMode>
       </BrowserRouter>
     </Provider>
 )

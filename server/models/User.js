@@ -12,6 +12,8 @@ const projectSchema = new Schema({
   type: { type: String, required: true },
   description: String,
   records: [recordSchema]
+}, {
+  timestamps: true
 })
 
 const userSchema = new Schema({

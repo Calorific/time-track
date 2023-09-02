@@ -2,10 +2,11 @@ import React, { useCallback, useEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 import { parseServerErrors } from '../../../utils/parseServerErrors'
 
-const FormComponent = ({ children, classes, validationScheme, onSubmit, defaultData, serverErrors }) => {
+const FormComponent = ({ children, classes, validationScheme, onSubmit, defaultData, serverErrors, clear }) => {
   const form = useRef()
   const [data, setData] = useState(defaultData)
   const [errors, setErrors] = useState({})
+  const isFirstRender = useRef(true)
 
   const handleChange = useCallback(target => {
     setData(prevState => ({
@@ -17,6 +18,7 @@ const FormComponent = ({ children, classes, validationScheme, onSubmit, defaultD
 
   const validate = useCallback(data => {
     if (!validationScheme) return true
+
     try {
       validationScheme.validateSync(data)
       setErrors({})
@@ -33,21 +35,30 @@ const FormComponent = ({ children, classes, validationScheme, onSubmit, defaultD
     if (!validate(data))
       return
 
-    setData(defaultData)
+    if (clear)
+      setData(defaultData)
     onSubmit(data)
   }
 
   useEffect(() => {
-    if (Object.keys(data).length > 0)
+    if (isFirstRender.current)
+      isFirstRender.current = false
+    else if (Object.keys(data).length > 0)
       validate(data)
   }, [data, validate])
+
+  useEffect(() => {
+    const newErrors = Object.keys(serverErrors).reduce((acc, name) =>
+        ({ ...acc, [name]: parseServerErrors(serverErrors[name]) }), {})
+    setErrors(newErrors)
+  }, [serverErrors, setErrors])
 
   const handleKeyDown = useCallback(e => {
     if (e.keyCode === 13) {
       e.preventDefault()
       const form = e.target.form
       const indexField = Array.prototype.indexOf.call(form, e.target)
-      form.elements[indexField + 1].focus()
+      form?.elements[(indexField + 1) % form.elements.length]?.focus()
     }
   }, [])
 
@@ -63,7 +74,7 @@ const FormComponent = ({ children, classes, validationScheme, onSubmit, defaultD
       ...child.props,
       onChange: handleChange,
       value: data[child.props.name] || '',
-      error: errors[child.props.name] || parseServerErrors(serverErrors[child.props.name]),
+      error: errors[child.props.name],
       onKeyDown: handleKeyDown,
     }
 
@@ -89,5 +100,6 @@ FormComponent.propTypes = {
   defaultData: PropTypes.object,
   classes: PropTypes.string,
   serverErrors: PropTypes.object,
+  clear: PropTypes.bool,
 }
 export default FormComponent

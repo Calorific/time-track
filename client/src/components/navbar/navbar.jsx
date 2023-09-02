@@ -12,7 +12,7 @@ const Navbar = () => {
   const dispatch = useDispatch()
   const currentUser = useSelector(getCurrentUser())
 
-  const activeLinkCLasses = ({ isActive }) => 'font-medium sm:py-6 ' + (isActive
+  const getLinkCLasses = ({ isActive }) => 'font-medium sm:py-6 ' + (isActive
         ? 'font-medium text-blue-600 sm:py-6 dark:text-blue-500'
         : 'text-gray-500 hover:text-gray-400 dark:text-gray-400 dark:hover:text-gray-500')
 
@@ -59,11 +59,14 @@ const Navbar = () => {
           </div>
           <div id="navbar-collapse-with-animation" className="hs-collapse absolute sm:relative bg-gray-50 left-0 right-0 hidden overflow-hidden transition-all duration-300 basis-full grow sm:block">
             <div className="flex flex-col gap-y-4 gap-x-0 mt-5 sm:flex-row sm:items-center sm:justify-end sm:gap-y-0 sm:gap-x-7 sm:mt-0 sm:pl-7">
-              <NavLink className={activeLinkCLasses} to="/" aria-current="page" end>
-                Home
+              <NavLink className={getLinkCLasses} to="/" aria-current="page" end>
+                Главная
               </NavLink>
-              <NavLink className={activeLinkCLasses} to="/list" aria-current="page" end>
-                List
+              <NavLink className={getLinkCLasses} to="/projects" aria-current="page">
+                Проекты
+              </NavLink>
+              <NavLink className={getLinkCLasses} to="/statistics" aria-current="page">
+                Статистика
               </NavLink>
               <Dropdown title={currentUser.name} classes='hidden sm:block' items={dropdownItems} />
             </div>

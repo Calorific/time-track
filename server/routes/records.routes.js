@@ -28,7 +28,8 @@ recordsRouter.post('/add', auth, [
           $push: {
             'projects.$.records': { timeSpent: time, description }
           }
-        }
+        },
+        { new: true }
       )
       const newRecord = data.projects.find(p => p._id.toString() === projectId).records.pop()
       return res.status(201).json(newRecord)

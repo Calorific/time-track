@@ -4,6 +4,10 @@
 @tailwind components;
 @tailwind utilities;
 
-.login {
-  min-width: 450px;
+p {
+  word-break: break-all;
+}
+
+.select p {
+  color: black !important;;
 }

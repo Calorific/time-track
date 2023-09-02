@@ -5,9 +5,10 @@ import { formatTime } from '../../utils/formatTime'
 import FormComponent from '../common/form/form'
 import TextField from '../common/form/textField'
 import toast from 'react-hot-toast'
+import cookieService from '../../services/cookie.service'
 
 const Countdown = ({ start, toggleStart, onTimeChange, time }) => {
-  const [initialTime, setInitialTime] = useState(0)
+  const [initialTime, setInitialTime] = useState(+cookieService.getCountdownInitialTime())
 
   useEffect(() => {
     if (start) {
@@ -36,6 +37,7 @@ const Countdown = ({ start, toggleStart, onTimeChange, time }) => {
 
       if (newTime !== initialTime - time && newTime) {
         setInitialTime(newTime)
+        cookieService.setCountdownInitialTime(newTime)
         onTimeChange(true)
       }
     }

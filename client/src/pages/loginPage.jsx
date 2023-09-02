@@ -9,6 +9,7 @@ import CheckboxField from '../components/common/form/checkboxField'
 import { useDispatch, useSelector } from 'react-redux'
 import { getAuthLoading, logIn } from '../store/auth'
 import Loader from '../components/common/app/loader'
+import FormWrapper from '../components/common/app/formWrapper'
 
 const LoginPage = () => {
   const dispatch = useDispatch()
@@ -31,8 +32,8 @@ const LoginPage = () => {
 
   const validationScheme = yup.object().shape(loginValidations)
 
-  return (
-    !authLoading ? <div className='max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 login'>
+  return <>
+    <FormWrapper externalClasses={authLoading ? 'hidden' : ''}>
       <h2 className='text-3xl'>Авторизация</h2>
       <FormComponent classes='mt-4' onSubmit={handleSubmit} validationScheme={validationScheme}
                      serverErrors={authErrors} defaultData={defaultData}
@@ -43,8 +44,9 @@ const LoginPage = () => {
         <Button type='submit' text='Войти' />
       </FormComponent>
       <p>Еще нет аккаунта? <NavLink to='/auth/register' className='text-blue-600'>Зарегистрироваться</NavLink></p>
-    </div> : <Loader />
-  )
+    </FormWrapper>
+    {authLoading ? <Loader /> : ''}
+  </>
 }
 
 export default LoginPage

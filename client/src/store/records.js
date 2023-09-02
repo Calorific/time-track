@@ -18,7 +18,9 @@ const recordsSlice = createSlice({
     recordRequestSuccess: (state, { payload }) => {
       state.loading = false
       state.errors = {}
-      state.entities[payload.id].push(payload.record)
+      if (Array.isArray(state.entities[payload.id]))
+        state.entities[payload.id].push(payload.record)
+      else state.entities[payload.id] = [payload.record]
     },
     recordRequestFail: (state, action) => {
       state.loading = false
@@ -43,7 +45,7 @@ export const clearRecords = () => dispatch => {
 }
 
 export const setRecords = projects => dispatch => {
-  const records = projects.reduce((total, p) => ({ ...total, [p._id]: p.records}))
+  const records = projects.reduce((total, p) => ({ ...total, [p._id]: p.records}), {})
   dispatch(recordsSet(records))
 }
 
@@ -59,6 +61,8 @@ export const addRecord = payload => async dispatch => {
     return data || { errors: { message: e.code } }
   }
 }
+
+export const getRecords = () => state => state.records.entities
 
 export const getProjectRecords = id => state => state.records.entities[id]
 

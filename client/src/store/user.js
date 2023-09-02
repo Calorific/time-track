@@ -80,7 +80,10 @@ export const loadCurrentUserData = () => async dispatch => {
 }
 
 export const getCurrentUser = () => state => state.user.currentUser
+
 export const getCurrentProjectId = () => state => state.user.currentUser?.currentProject
+
+export const getProjectTypes = () => state => state.user.currentUser?.projectTypes
 
 export const getUserErrors = () => state => state.user.errors
 

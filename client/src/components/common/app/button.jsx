@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const Button = ({ onClick, type, disabled, bgColor, text, classes }) => {
+const Button = ({ onClick, type, disabled, bgColor, text, classes, children }) => {
   const getButtonClasses = `${bgColor} text-white font-bold py-2 px-4 rounded ${classes}`
 
   return (
@@ -12,6 +12,7 @@ const Button = ({ onClick, type, disabled, bgColor, text, classes }) => {
         disabled={disabled}
         onClick={onClick}
       >
+        {children}
         {text}
       </button>
     </>
@@ -29,6 +30,7 @@ Button.propTypes = {
   bgColor: PropTypes.string,
   text: PropTypes.string,
   classes: PropTypes.string,
+  children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node])
 }
 
 export default React.memo(Button)
