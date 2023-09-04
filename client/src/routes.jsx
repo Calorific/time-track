@@ -19,6 +19,10 @@ const routes = (isLoggedIn, location) => [
         element: <MainPage />
       },
       {
+        path: 'profile',
+        element: <div>Profile</div>
+      },
+      {
         path: 'projects/:id/details',
         element: <ProjectDetailsPage />
       },

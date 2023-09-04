@@ -1,30 +1,18 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { Input } from '@material-tailwind/react'
 
 const TextField = ({ type, name, value, onChange, label, placeholder, error, onKeyDown, classes, ...rest  }) => {
   const handleChange = ({ target }) => {
     onChange({ name: target.name, value: target.value })
   }
 
-  const getLabelClasses = 'block mb-2 text-sm font-medium dark:text-gray-200 '
-      + (error ? 'text-red-600' : 'text-gray-900')
-
-
-  const getInputClasses = `bg-gray-50 border border-gray-300 rounded-sm focus:ring-blue-500
-    focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
-    dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500
-    ${error
-      ? 'text-red-900 placeholder-red-600 border-red-500 border rounded outline-none focus:ring-red-500 focus:border-red-500'
-      : 'text-gray-900'
-  }`
+  const getInputClasses = 'text-gray-900 dark:text-gray-300'
 
   return (
     <div className={classes}>
-      {label && <label htmlFor={name} className={getLabelClasses}>
-        {label}
-      </label>}
-      <input id={name} type={type} name={name} value={value} onChange={handleChange} className={getInputClasses}
-         placeholder={placeholder} onKeyDown={onKeyDown} {...rest} />
+      <Input label={label || ''} id={name} type={type} name={name} value={value} onChange={handleChange} onKeyDown={onKeyDown}
+             error={error} className={getInputClasses} containerProps={{ className: '!min-w-0' }} {...rest} />
       {error && <span className="text-sm text-red-600">{error}</span>}
     </div>
   )

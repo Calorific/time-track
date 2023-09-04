@@ -42,7 +42,7 @@ const ProjectInfo = ({ project, alwaysShow }) => {
         <Badge text={project.type} />
       </h3>
       <p className='dark:text-gray-400 pt-1'>
-        На проект потрачено времени: <span className='text-cyan-600'>{formatTime(getProjectTime(records))}</span>
+        На проект потрачено времени: <span className='text-cyan-600 font-time'>{formatTime(getProjectTime(records))}</span>
       </p>
       <p className={'js-desc mt-2 text-gray-800 dark:text-gray-400 text-justify ' + (!show && canHide ? 'truncate' : '')}>
         {project.description}

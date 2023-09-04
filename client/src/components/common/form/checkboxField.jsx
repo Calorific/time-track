@@ -1,18 +1,18 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { Checkbox } from '@material-tailwind/react'
 
 const CheckboxField = ({ name, value, onChange, label, error, ...rest }) => {
+  const classes = 'before:hidden'
   const handleChange = ({ target }) => {
     onChange({ name: target.name, value: target.checked })
   }
 
   return (
-    <div className='mb-4'>
+    <div className='-mt-2 mb-1 -ml-2'>
       <div className="flex items-center">
-        <input type="checkbox" checked={value} onChange={handleChange} {...rest} name={name} id={name}
-               className="w-4 h-4 text-blue-600 bg-gray-700 border-gray-300 rounded focus:ring-blue-500
-                dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-        <label htmlFor={name} className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+        <Checkbox name={name} id={name} checked={value} onChange={handleChange} className={classes} {...rest} />
+        <label htmlFor={name} className="ml-0.5 text-sm font-medium text-gray-900 dark:text-gray-300 cursor-pointer">
           {label}
         </label>
       </div>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import CardWrapper from '../common/app/cardWrapper'
 import { formatTime } from '../../utils/formatTime'

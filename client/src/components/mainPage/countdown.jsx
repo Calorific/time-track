@@ -54,13 +54,12 @@ const Countdown = ({ start, toggleStart, onTimeChange, time, reset }) => {
     <div className='flex justify-between items-center w-full gap-x-2'>
       <FormComponent classes='sm:flex sm:justify-between sm:flex-row sm:items-center sm:gap-x-2' onSubmit={handleSubmit}>
         <Button type="submit" text={!start ? 'Старт' : 'Пауза'} />
-        <TextField name='hours' placeholder='Часы' type='number' classes='sm:m-0 my-4 sm:flex-1 w-full' min={0} disabled={start} />
-        <TextField name='minutes' placeholder='Минуты' type='number' classes='sm:m-0 mb-4 sm:flex-1 w-full' min={0} max={59} disabled={start} />
-        <TextField name='seconds' placeholder='Секунды' type='number' classes='sm:m-0 mb-4 sm:flex-1 w-full' min={0} max={59} disabled={start} />
+        <TextField name='hours' label='Часы' type='number' classes='sm:m-0 my-4 sm:flex-1 w-full' min={0} disabled={start} />
+        <TextField name='minutes' label='Минуты' type='number' classes='sm:m-0 mb-4 sm:flex-1 w-full' min={0} max={59} disabled={start} />
+        <TextField name='seconds' label='Секунды' type='number' classes='sm:m-0 mb-4 sm:flex-1 w-full' min={0} max={59} disabled={start} />
       </FormComponent>
 
-      <span className="border border-gray-700 text-3xl align-middle rounded select-none cursor-pointer dark:text-gray-300"
-            style={{ fontFamily: 'Lato, sans-serif' }}
+      <span className="border border-gray-700 text-3xl align-middle rounded select-none cursor-pointer dark:text-gray-300 font-time"
             onClick={handleReset}
       >
           {formatTime(initialTime - time, true)}
