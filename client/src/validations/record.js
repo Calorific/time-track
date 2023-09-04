@@ -15,16 +15,19 @@ const greaterThanZero = time => {
 }
 
 const validField = idx => time => {
+  if (+time)
+    return true
+
   return +time.split(':').reverse()[idx] < 60
 }
 
 const recordValidations = {
-  description: yup.string().max(250, 'Описание не должно превышать 250 символов'),
   time: yup.string().required('Необходимо указать время')
     .test('isValidTime', 'Время введено некорректно', checkTime)
     .test('greaterThanZero', 'Время должно быть больше нуля', greaterThanZero)
     .test('validSeconds', 'Секунды не должны быть больше 59', validField(0))
-    .test('validMinutes', 'Минуты не должны быть больше 59', validField(1))
+    .test('validMinutes', 'Минуты не должны быть больше 59', validField(1)),
+  description: yup.string().max(250, 'Описание не должно превышать 250 символов'),
 }
 
 export default recordValidations

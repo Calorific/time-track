@@ -34,7 +34,7 @@ const LoginPage = () => {
 
   return <>
     <FormWrapper externalClasses={authLoading ? 'hidden' : ''}>
-      <h2 className='text-3xl'>Авторизация</h2>
+      <h2 className='text-3xl dark:text-gray-200'>Авторизация</h2>
       <FormComponent classes='mt-4' onSubmit={handleSubmit} validationScheme={validationScheme}
                      serverErrors={authErrors} defaultData={defaultData}
       >
@@ -43,7 +43,7 @@ const LoginPage = () => {
         <CheckboxField name='keepLoggedIn' label='Оставаться в сети' />
         <Button type='submit' text='Войти' />
       </FormComponent>
-      <p>Еще нет аккаунта? <NavLink to='/auth/register' className='text-blue-600'>Зарегистрироваться</NavLink></p>
+      <p className='dark:text-gray-200'>Еще нет аккаунта? <NavLink to='/auth/register' className='text-blue-600'>Зарегистрироваться</NavLink></p>
     </FormWrapper>
     {authLoading ? <Loader /> : ''}
   </>

@@ -7,8 +7,8 @@ import TextField from '../common/form/textField'
 import toast from 'react-hot-toast'
 import cookieService from '../../services/cookie.service'
 
-const Countdown = ({ start, toggleStart, onTimeChange, time }) => {
-  const [initialTime, setInitialTime] = useState(+cookieService.getCountdownInitialTime())
+const Countdown = ({ start, toggleStart, onTimeChange, time, reset }) => {
+  const [initialTime, setInitialTime] = useState(+cookieService.getCountdownInitialTime() || 0)
 
   useEffect(() => {
     if (start) {
@@ -45,6 +45,11 @@ const Countdown = ({ start, toggleStart, onTimeChange, time }) => {
     toggleStart()
   }
 
+  const handleReset = () => {
+    setInitialTime(0)
+    reset()
+  }
+
   return (
     <div className='flex justify-between items-center w-full gap-x-2'>
       <FormComponent classes='sm:flex sm:justify-between sm:flex-row sm:items-center sm:gap-x-2' onSubmit={handleSubmit}>
@@ -54,9 +59,12 @@ const Countdown = ({ start, toggleStart, onTimeChange, time }) => {
         <TextField name='seconds' placeholder='Секунды' type='number' classes='sm:m-0 mb-4 sm:flex-1 w-full' min={0} max={59} disabled={start} />
       </FormComponent>
 
-      <span className="border border-gray-700 text-3xl align-middle rounded" style={{ fontFamily: 'Lato, sans-serif' }}>
-        {formatTime(initialTime - time, true)}
-      </span>
+      <span className="border border-gray-700 text-3xl align-middle rounded select-none cursor-pointer dark:text-gray-300"
+            style={{ fontFamily: 'Lato, sans-serif' }}
+            onClick={handleReset}
+      >
+          {formatTime(initialTime - time, true)}
+        </span>
     </div>
   )
 }
@@ -66,6 +74,7 @@ Countdown.propTypes = {
   toggleStart: PropTypes.func,
   onTimeChange: PropTypes.func,
   time: PropTypes.number,
+  reset: PropTypes.func,
 }
 
 export default Countdown

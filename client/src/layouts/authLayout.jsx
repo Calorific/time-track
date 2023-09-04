@@ -13,10 +13,8 @@ const AuthLayout = () => {
   }, [currentUserData, navigate])
 
   return (
-    <div className='w-screen h-screen'>
-      <div className='container mx-auto flex justify-center items-center h-full'>
-        <Outlet />
-      </div>
+    <div className='flex justify-center items-center min-h-screen dark:bg-gray-800 py-4'>
+      <Outlet />
     </div>
   )
 }

@@ -41,6 +41,16 @@ export const parseServerErrors = error => {
       return 'Проект не найден. Попробуйте позже'
     case serverErrors.networkError:
       return 'Произошла ошибка соединения. Попробуйте позже'
+    case serverErrors.projectTitleRequired:
+      return 'Название обязательно для заполнения'
+    case serverErrors.maxLengthProjectTitle:
+      return 'Название не должно превышать 50 символов'
+    case serverErrors.typeRequired:
+      return 'Обязетельно нужно выбрать тип'
+    case serverErrors.maxLengthProjectType:
+      return 'Тип не должен превышать 25 символов'
+    case serverErrors.projectExists:
+      return 'Проект с таким названием уже существует'
     default:
       return 'На сервере произошла непредвиденная ошибка. Попробуйте позже'
   }

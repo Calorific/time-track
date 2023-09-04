@@ -17,9 +17,10 @@ const ProjectListPage = () => {
   const projects = useSelector(getProjectsList())
   const [itemOffset, setItemOffset] = useState(0)
   const [search, setSearch] = useState('')
-  const paginationBaseClasses = 'text-gray-500 hover:text-blue-700 hover:bg-gray-200 py-1 px-2 inline-flex items-center transition-colors font-medium '
+  const paginationBaseClasses = 'text-gray-500 hover:text-blue-700 hover:bg-gray-200 py-1 px-2 inline-flex' +
+      ' items-center transition-colors font-medium dark:hover:bg-gray-700 '
 
-  const itemsPerPage = 5
+  const itemsPerPage = 1
 
   const handlePageClick = e => {
     const newOffset = (e.selected * itemsPerPage) % projects.length
@@ -52,8 +53,8 @@ const ProjectListPage = () => {
 
   return (
     <div className='flex justify-center pt-5'>
-      <div className='w-full sm:w-11/12 flex justify-center flex-col'>
-        <div className='flex gap-2 items-center pb-3'>
+      <div className='w-full sm:w-11/12 px-5 sm:px-0 flex justify-center flex-col'>
+        <div className='flex gap-2 flex-wrap items-center pb-3'>
           <ProjectSearch value={search} onChange={handleSearch} />
           <NavLink to='/projects/create'>
             <Button bgColor='hidden sm:inline-block bg-green-500 hover:bg-green-700'>
@@ -66,7 +67,7 @@ const ProjectListPage = () => {
         </div>
         {filteredProjects.length ? <>
           <ProjectList projects={currentItems} />
-          <ReactPaginate
+          {pageCount > 1 && <ReactPaginate
               breakLabel="..."
               nextLabel="Вперед"
               onPageChange={handlePageClick}
@@ -82,7 +83,7 @@ const ProjectListPage = () => {
               previousLinkClassName={paginationBaseClasses + 'gap-2 rounded-md'}
               nextLinkClassName={paginationBaseClasses + 'gap-2 rounded-md'}
               activeLinkClassName="!text-blue-600"
-          />
+          />}
         </> : <p className="text-base text-gray-900 dark:text-white mt-8 ml-8">
           По такому запросу ничего не найдено
         </p>}

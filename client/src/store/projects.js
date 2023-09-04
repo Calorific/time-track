@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import httpService from '../services/http.service'
 import { changeCurrentProject } from './user'
+import { clearProjectRecords } from './records'
 
 const initialState = {
   loading: false,
@@ -32,6 +33,12 @@ const projectSlice = createSlice({
       state.loading = false
       state.errors = {}
     },
+    projectEditSuccess: (state, action) => {
+      state.entities[action.payload.projectIdx] = action.payload.project
+
+      state.loading = false
+      state.errors = {}
+    },
     projectDeleted: (state, action) => {
       state.entities = state.entities?.filter(p => p._id !== action.payload)
     },
@@ -44,7 +51,7 @@ const projectSlice = createSlice({
 
 
 const { reducer: projectsReducer, actions } = projectSlice
-const { projectsSet, projectsCleared, projectRequested, projectRequestSuccess, projectRequestFail, projectDeleted } = actions
+const { projectsSet, projectsCleared, projectRequested, projectRequestSuccess, projectRequestFail, projectDeleted, projectEditSuccess } = actions
 
 export const setProjects = entities => dispatch => {
   const projects = entities.map(p => {
@@ -73,9 +80,24 @@ export const addProject = ({ navigate, payload }) => async dispatch => {
   }
 }
 
+export const editProject = ({ navigate, id, payload }) => async dispatch => {
+  dispatch(projectRequested())
+
+  try {
+    const { data } = await httpService.post('/projects/edit', { projectId: id, ...payload })
+    dispatch(projectEditSuccess(data))
+    dispatch(changeCurrentProject(data.project._id))
+    navigate('/')
+  } catch (e) {
+    const data = e?.response?.data
+    dispatch(projectRequestFail(data?.errors || { message: e.code }))
+    return data || { errors: { message: e.code } }
+  }
+}
+
 export const deleteProject = projectId => async dispatch => {
   dispatch(projectDeleted(projectId))
-
+  dispatch(clearProjectRecords(projectId))
   try {
     await httpService.delete(`/projects/remove/${projectId}`)
   } catch (e) {

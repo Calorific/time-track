@@ -16,7 +16,7 @@ root.render(
     <Provider store={store}>
       <BrowserRouter>
         <React.StrictMode>
-          <Toaster position='top-right' />
+          <div className='dark:bg-slate-800 dark:text-stone-200'><Toaster position='top-right' /></div>
           <App />
         </React.StrictMode>
       </BrowserRouter>

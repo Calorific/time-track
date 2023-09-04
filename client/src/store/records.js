@@ -4,7 +4,7 @@ import httpService from '../services/http.service'
 const initialState = {
   loading: false,
   errors: {},
-  entities: []
+  entities: {}
 }
 
 const recordsSlice = createSlice({
@@ -31,6 +31,18 @@ const recordsSlice = createSlice({
       state.errors = {}
       state.loading = false
     },
+    projectRecordsCleared: (state, action) => {
+      delete state.entities[action.payload]
+    },
+    recordIsDeleting: (state, { payload }) => {
+      state.entities[payload.projectId].find(r => r._id === payload.recordId).isDeleting = true
+    },
+    recordDeleteCancelled: (state, { payload }) => {
+      state.entities[payload.projectId].find(r => r._id === payload.recordId).isDeleting = false
+    },
+    recordDeleted: (state, { payload }) => {
+      state.entities[payload.projectId] = state.entities[payload.projectId].filter(r => r._id !== payload.recordId)
+    },
     recordsCleared: () => {
       return initialState
     }
@@ -38,10 +50,22 @@ const recordsSlice = createSlice({
 })
 
 const { reducer: recordsReducer, actions } = recordsSlice
-const { recordsSet, recordsCleared, recordRequested, recordRequestSuccess, recordRequestFail } = actions
+const { recordsSet, recordsCleared, recordRequested, recordRequestSuccess, recordRequestFail, projectRecordsCleared, recordDeleted, recordIsDeleting, recordDeleteCancelled } = actions
 
 export const clearRecords = () => dispatch => {
   dispatch(recordsCleared())
+}
+
+export const clearProjectRecords = id => dispatch => {
+  dispatch(projectRecordsCleared(id))
+}
+
+export const deletingRecord = payload => dispatch => {
+  dispatch(recordIsDeleting(payload))
+}
+
+export const cancelRecordDelete = payload => dispatch => {
+  dispatch(recordDeleteCancelled(payload))
 }
 
 export const setRecords = projects => dispatch => {
@@ -55,6 +79,18 @@ export const addRecord = payload => async dispatch => {
   try {
     const { data } = await httpService.post('records/add', payload)
     dispatch(recordRequestSuccess({ id: payload.projectId, record: data }))
+  } catch (e) {
+    const data = e?.response?.data
+    dispatch(recordRequestFail(data?.errors || { message: e.code }))
+    return data || { errors: { message: e.code } }
+  }
+}
+
+export const deleteRecord = payload => async dispatch => {
+  dispatch(recordDeleted(payload))
+
+  try {
+    await httpService.delete(`/records/remove/${payload.projectId}/${payload.recordId}`)
   } catch (e) {
     const data = e?.response?.data
     dispatch(recordRequestFail(data?.errors || { message: e.code }))

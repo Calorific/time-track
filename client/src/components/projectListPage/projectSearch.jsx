@@ -8,7 +8,7 @@ const ProjectSearch = ({ value, onChange }) => {
   }
 
   return (
-      <div className="bg-white dark:bg-gray-900">
+      <div>
         <label htmlFor="table-search" className="sr-only">Search</label>
         <div className="relative">
           <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -19,7 +19,7 @@ const ProjectSearch = ({ value, onChange }) => {
             </svg>
           </div>
           <input type="text" id="table-search" placeholder="Поиск по названию" onChange={handleChange} value={value}
-                 className="block p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg outline-none w-80
+                 className="block p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg outline-none w-52 sm:w-80
                   bg-gray-50 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
                    dark:text-white dark:focus:border-blue-500" />
         </div>

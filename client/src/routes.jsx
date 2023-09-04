@@ -6,7 +6,8 @@ import LoginPage from './pages/loginPage'
 import MainLayout from './layouts/mainLayout'
 import MainPage from './pages/mainPage'
 import ProjectListPage from './pages/projectListPage'
-import CreateProject from './pages/createProject'
+import ProjectForm from './pages/projectForm'
+import ProjectDetailsPage from './pages/projectDetailsPage'
 
 const routes = (isLoggedIn, location) => [
   {
@@ -19,15 +20,15 @@ const routes = (isLoggedIn, location) => [
       },
       {
         path: 'projects/:id/details',
-        element: <p>Details</p>
+        element: <ProjectDetailsPage />
       },
       {
         path: 'projects/:id/edit',
-        element: <CreateProject />
+        element: <ProjectForm />
       },
       {
         path: 'projects/create',
-        element: <CreateProject />
+        element: <ProjectForm />
       },
       {
         path: 'projects/:page?',

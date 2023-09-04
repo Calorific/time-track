@@ -17,7 +17,12 @@ const serverErrors = {
   invalidTime: 'INVALID_TIME',
   timeRequired: 'TIME_REQUIRED',
   projectNotFound: 'PROJECT_NOT_FOUND',
-  networkError: 'ERR_NETWORK'
+  networkError: 'ERR_NETWORK',
+  projectTitleRequired: 'PROJECT_TITLE_REQUIRED',
+  maxLengthProjectTitle: 'PROJECT_TITLE_MAX_LENGTH_50',
+  typeRequired: 'TYPE_REQUIRED',
+  maxLengthProjectType: 'PROJECT_TYPE_MAX_LENGTH_25',
+  projectExists: 'PROJECT_EXISTS'
 }
 
 export default serverErrors

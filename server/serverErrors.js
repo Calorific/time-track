@@ -21,7 +21,9 @@ const serverErrors = {
   projectTitleRequired: 'PROJECT_TITLE_REQUIRED',
   maxLengthProjectTitle: 'PROJECT_TITLE_MAX_LENGTH_50',
   typeRequired: 'TYPE_REQUIRED',
-  maxLengthProjectType: 'PROJECT_TYPE_MAX_LENGTH_25'
+  maxLengthProjectType: 'PROJECT_TYPE_MAX_LENGTH_25',
+  projectExists: 'PROJECT_EXISTS',
+  recordNotFound: 'RECORD_NOT_FOUND'
 }
 
 export default serverErrors

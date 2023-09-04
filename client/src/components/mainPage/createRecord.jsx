@@ -19,17 +19,8 @@ const CreateRecord = ({ time, currentProjectId }) => {
 
   const validationScheme = yup.object().shape(recordValidations)
 
-  if (loading)
-    return <Loader />
-
-  if (!show)
-    return (
-      <div className="px-4 md:px-5 pb-2 md:pb-3">
-        <Button bgColor='bg-green-500 hover:bg-green-700' text='Создать запись' onClick={() => setShow(true)} />
-      </div>
-    )
-
-  const onSubmit = async payload => {
+  const onSubmit = async record => {
+    const payload = { ...record }
     payload.description ||= 'Без описания'
     payload.projectId = currentProjectId
     payload.time = parseTime(payload.time)
@@ -40,9 +31,18 @@ const CreateRecord = ({ time, currentProjectId }) => {
       setRecordErrors(data.errors.formErrors)
   }
 
-  return (
-    <FormComponent classes='px-4 md:px-5 pb-2 md:pb-3' validationScheme={validationScheme} onSubmit={onSubmit}
-                   serverErrors={recordErrors}>
+  if (!show)
+    return (
+      <div className="px-4 md:px-5 pb-2 md:pb-3">
+        <Button bgColor='bg-green-500 hover:bg-green-700' text='Создать запись' onClick={() => setShow(true)} />
+      </div>
+    )
+
+  if (loading)
+    return <div className='flex justify-center my-4'><Loader /></div>
+
+  return  (
+    <FormComponent classes={'px-4 md:px-5 pb-2 md:pb-3'} {...{validationScheme, onSubmit, serverErrors: recordErrors }}>
       <TextField name='description' label='Описание' />
       <TextField name='time' label='Затраченное время' placeholder={formatTime(time)} />
       <Button type='submit' text='Создать' classes='mr-2' />

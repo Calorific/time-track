@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import SwitchField from '../common/form/switchField'
 import Timer from './timer'
@@ -25,17 +25,19 @@ const   RecordTime = ({ onTimeChange, time }) => {
     })
   }
 
-  useEffect(() => {
-    if (!time && start)
-      toggleStart()
-  }, [time, start])
+  const reset = () => {
+    onTimeChange(true)
+    setStart(false)
+    cookieService.setCountdownInitialTime('')
+  }
+
   return (
     <div className="px-4 md:px-5 py-2 md:py-3 w-full">
       <SwitchField leftLabel='Таймер' rightLabel='Секундомер' name='recordType' value={isCountdown}
                    onChange={handleChange} disabled={start} />
       {!isCountdown
-        ? <Timer start={start} toggleStart={toggleStart} onTimeChange={onTimeChange} time={time} />
-        : <Countdown start={start} toggleStart={toggleStart} onTimeChange={onTimeChange} time={time} />
+        ? <Timer {...{ start, toggleStart, onTimeChange, time, reset }} />
+        : <Countdown {...{ start, toggleStart, onTimeChange, time, reset }} />
       }
     </div>
   )

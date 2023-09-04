@@ -4,7 +4,7 @@ import toast from 'react-hot-toast'
 import { faRotateLeft } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-const ToastUndoDelete = ({ t, onCancel, onDelete, deleteTime }) => {
+const ToastUndoDelete = ({ t, onCancel, onDelete, deleteTime, text }) => {
   const progress = useRef()
   const [time, setTime] = useState(deleteTime)
   const [stop, setStop] = useState(false)
@@ -43,7 +43,7 @@ const ToastUndoDelete = ({ t, onCancel, onDelete, deleteTime }) => {
           strokeLinecap='round' strokeWidth='1.8' className='transition-[stroke-dashoffset] duration-[5000ms] ease-linear' ref={progress} />
       </svg>
       <span className='absolute left-2'>{time}</span>
-      <p className='mx-2'>Проект удален</p>
+      <p className='mx-2'>{text}</p>
       <button className='text-blue-500 ml-5' onClick={handleClick}>
         <FontAwesomeIcon icon={faRotateLeft} /> Отменить
       </button>
@@ -52,7 +52,7 @@ const ToastUndoDelete = ({ t, onCancel, onDelete, deleteTime }) => {
 }
 
 ToastUndoDelete.defaultProps = {
-  deleteTime: 5
+  deleteTime: 5,
 }
 
 ToastUndoDelete.propTypes = {
@@ -60,6 +60,7 @@ ToastUndoDelete.propTypes = {
   onCancel: PropTypes.func,
   onDelete: PropTypes.func,
   deleteTime: PropTypes.number,
+  text: PropTypes.string,
 }
 
 export default ToastUndoDelete

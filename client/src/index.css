@@ -4,10 +4,29 @@
 @tailwind components;
 @tailwind utilities;
 
+body::-webkit-scrollbar {
+  display: none;
+}
+
+body {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
 p {
-  word-break: break-all;
+  word-break: break-word;
 }
 
 .select p {
   color: black !important;;
+}
+
+.select > div > div:first-child {
+  border: 1px solid #d1d5db;
+  border-radius: 0.125rem;
+}
+
+.select div div {
+  background-color: #f9fafb;
+  border-radius: 0.125rem;
 }

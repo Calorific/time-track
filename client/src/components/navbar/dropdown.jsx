@@ -10,8 +10,8 @@ const Dropdown = ({ title, classes, items }) => {
             id="hs-dropdown-with-title"
             type="button"
             className="hs-dropdown-toggle py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md bg-gray-50
-                     font-medium text-gray-700 align-middle hover:text-gray-500 transition-all text-sm dark:bg-slate-900
-                      dark:hover:bg-slate-800 dark:text-gray-400 outline-none"
+                     font-medium text-gray-700 align-middle hover:text-gray-500 transition-all text-sm dark:bg-gray-800
+                      dark:hover:bg-gray-900 dark:text-gray-400 outline-none"
         >
           {title}
           <svg className="hs-dropdown-open:rotate-180 w-2.5 h-2.5 text-gray-600" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -28,7 +28,7 @@ const Dropdown = ({ title, classes, items }) => {
           <div className="py-2 first:pt-0 last:pb-0">
             {items && items.map((item, i) => (
                 <button className="flex items-center gap-x-3.5 rounded-md text-sm text-gray-800 hover:bg-gray-100
-                      dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300" key={i}>
+                      dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300 transition-colors" key={i}>
                   {item}
                 </button>
             ))}

@@ -12,7 +12,7 @@ const Badge = ({ text, color, externalClasses }) => {
 }
 
 Badge.defaultProps = {
-  color: 'bg-green-100 text-green-800'
+  color: 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
 }
 
 Badge.propTypes = {

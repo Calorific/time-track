@@ -23,7 +23,7 @@ recordsRouter.post('/add', auth, [
       const { time, description, projectId } = req.body
 
       const data = await User.findOneAndUpdate(
-        { '_id': req.userId, projects: { '$elemMatch': { _id: projectId } } },
+        { '_id': req.userId, projects: { '$elemMatch': { _id: req.body.projectId } } },
         {
           $push: {
             'projects.$.records': { timeSpent: time, description }
@@ -31,14 +31,15 @@ recordsRouter.post('/add', auth, [
         },
         { new: true }
       )
-      const newRecord = data.projects.find(p => p._id.toString() === projectId).records.pop()
-      return res.status(201).json(newRecord)
-    } catch (e) {
-      if (e.model)
+
+      if (!data)
         return res.status(404).json({
           errors: { message: serverErrors.projectNotFound }
         })
 
+      const newRecord = data.projects.find(p => p._id.toString() === projectId).records.pop()
+      return res.status(201).json(newRecord)
+    } catch (e) {
       console.log(chalk.red('[SERVER ERROR POST /records/add]', e.message))
       return res.status(500).json({
         errors: { message: serverErrors.internalError }
@@ -47,5 +48,29 @@ recordsRouter.post('/add', auth, [
     }
   }
 ])
+
+recordsRouter.delete('/remove/:projectId/:recordId',auth, async (req, res) => {
+  try {
+    await User.findOneAndUpdate(
+        { '_id': req.userId, projects: { '$elemMatch': { _id: req.params.projectId } } },
+        {
+          $pull: {
+            'projects.$.records': { '_id': req.params.recordId }
+          }
+        }
+    )
+    return res.sendStatus(200)
+  } catch (e) {
+    console.log(e)
+    if (e.model)
+      return res.status(404).json({
+        errors: { message: serverErrors.recordNotFound }
+      })
+    console.log(chalk.red('[SERVER ERROR DELETE /projects/remove]', e.message))
+    return res.status(500).json({
+      errors: { message: serverErrors.internalError }
+    })
+  }
+})
 
 export default recordsRouter

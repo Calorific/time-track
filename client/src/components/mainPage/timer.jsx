@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { formatTime } from '../../utils/formatTime'
 import Button from '../common/app/button'
 
-const Timer = ({ start, toggleStart, onTimeChange, time }) => {
+const Timer = ({ start, toggleStart, onTimeChange, time, reset }) => {
 
   useEffect(() => {
     if (start) {
@@ -15,7 +15,10 @@ const Timer = ({ start, toggleStart, onTimeChange, time }) => {
   return (
       <div className='flex justify-between items-center pt-[2.5px] mb-[3px]'>
         <Button type="submit" text={!start ? 'Старт' : 'Пауза'} onClick={toggleStart} />
-        <span className="border border-gray-700 text-3xl align-middle rounded" style={{ fontFamily: 'Lato, sans-serif' }}>
+        <span className="border border-gray-700 text-3xl align-middle rounded select-none cursor-pointer dark:text-gray-300"
+              style={{ fontFamily: 'Lato, sans-serif' }}
+              onClick={reset}
+        >
           {formatTime(time, true)}
         </span>
       </div>
@@ -27,6 +30,8 @@ Timer.propTypes = {
   start: PropTypes.bool,
   toggleStart: PropTypes.func,
   onTimeChange: PropTypes.func,
+  time: PropTypes.number,
+  reset: PropTypes.func,
 }
 
 export default Timer

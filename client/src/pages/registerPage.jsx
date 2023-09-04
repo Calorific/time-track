@@ -35,7 +35,7 @@ const RegisterPage = () => {
 
   return <>
     <FormWrapper externalClasses={authLoading ? 'hidden' : ''}>
-      <h2 className="text-3xl">Регистрация</h2>
+      <h2 className="text-3xl dark:text-gray-200">Регистрация</h2>
       <FormComponent classes="mt-4" onSubmit={handleSubmit} validationScheme={validationScheme}
                      defaultData={defaultValues} serverErrors={authErrors}
       >
@@ -45,7 +45,7 @@ const RegisterPage = () => {
         <CheckboxField name="agree" label="Согласие на обработку данных" />
         <Button type="submit" text="Зарегистрироваться" />
       </FormComponent>
-      <p>Уже есть аккаунт? <NavLink to="/auth/login" className="text-blue-600">Войти</NavLink></p>
+      <p className='dark:text-gray-200'>Уже есть аккаунт? <NavLink to="/auth/login" className="text-blue-600">Войти</NavLink></p>
     </FormWrapper>
     {authLoading ? <Loader /> : ''}
   </>

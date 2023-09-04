@@ -2,7 +2,7 @@ import React, { useCallback, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { changeCurrentProject, getCurrentProjectId } from '../store/user'
 import SelectField from '../components/common/form/selectField'
-import ProjectInfo from '../components/mainPage/projectInfo'
+import ProjectInfo from '../components/common/app/projectInfo'
 import RecordTime from '../components/mainPage/recordTime'
 import CreateRecord from '../components/mainPage/createRecord'
 import { getProject, getProjectsList } from '../store/projects'
@@ -23,9 +23,8 @@ const MainPage = () => {
   const options = projects.map(p => ({ value: p._id, label: p.title }))
 
   const handleChange = async data => {
-    await dispatch(changeCurrentProject(data.value))
-
     setSelectValue(data)
+    await dispatch(changeCurrentProject(data.value))
     setTime(0)
   }
 

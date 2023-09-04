@@ -6,7 +6,7 @@ const TextField = ({ type, name, value, onChange, label, placeholder, error, onK
     onChange({ name: target.name, value: target.value })
   }
 
-  const getLabelClasses = 'block mb-2 text-sm font-medium dark:text-white '
+  const getLabelClasses = 'block mb-2 text-sm font-medium dark:text-gray-200 '
       + (error ? 'text-red-600' : 'text-gray-900')
 
 
@@ -14,7 +14,7 @@ const TextField = ({ type, name, value, onChange, label, placeholder, error, onK
     focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
     dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500
     ${error
-      ? 'text-red-900 placeholder-red-600 border border-red-500 rounded outline-none focus:ring-red-500 focus:border-red-500'
+      ? 'text-red-900 placeholder-red-600 border-red-500 border rounded outline-none focus:ring-red-500 focus:border-red-500'
       : 'text-gray-900'
   }`
 

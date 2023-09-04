@@ -36,7 +36,7 @@ const Navbar = () => {
             aria-label="Global"
         >
           <div className="flex items-center justify-between">
-            <NavLink className="flex-none text-xl font-semibold dark:text-white mr-4" to="/" aria-label="Brand">
+            <NavLink className="flex-none text-xl font-semibold dark:text-gray-100 mr-4" to="/" aria-label="Brand">
               Time Track
             </NavLink>
             <div className="sm:hidden">
@@ -57,15 +57,15 @@ const Navbar = () => {
               <Dropdown title={currentUser.name} items={dropdownItems} />
             </div>
           </div>
-          <div id="navbar-collapse-with-animation" className="hs-collapse absolute sm:relative bg-gray-50 left-0 right-0 hidden overflow-hidden transition-all duration-300 basis-full grow sm:block">
+          <div id="navbar-collapse-with-animation" className="hs-collapse absolute sm:relative left-0 right-0 hidden overflow-hidden transition-all duration-300 basis-full grow sm:block">
             <div className="flex flex-col gap-y-4 gap-x-0 mt-5 sm:flex-row sm:items-center sm:justify-end sm:gap-y-0 sm:gap-x-7 sm:mt-0 sm:pl-7">
               <NavLink className={getLinkCLasses} to="/" aria-current="page" end>
                 Главная
               </NavLink>
-              <NavLink className={getLinkCLasses} to="/projects" aria-current="page">
+              <NavLink className={getLinkCLasses} to="/projects" aria-current="page" end>
                 Проекты
               </NavLink>
-              <NavLink className={getLinkCLasses} to="/statistics" aria-current="page">
+              <NavLink className={getLinkCLasses} to="/statistics" aria-current="page" end>
                 Статистика
               </NavLink>
               <Dropdown title={currentUser.name} classes='hidden sm:block' items={dropdownItems} />
