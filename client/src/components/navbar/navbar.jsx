@@ -1,7 +1,7 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { getCurrentUser } from '../../store/user'
-import { NavLink, useNavigate } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import Dropdown from './dropdown'
 
 const Navbar = () => {
@@ -24,7 +24,7 @@ const Navbar = () => {
             <div className="sm:hidden">
               <button type="button"
                   className="hs-collapse-toggle p-2 inline-flex justify-center items-center gap-2 rounded-md border
-                    font-medium bg-white text-gray-700 shadow-sm align-middle hover:bg-gray-50 transition-all text-sm
+                    font-medium text-gray-700 shadow-sm align-middle bg-gray-50 text-sm mr-1
                     dark:bg-slate-900 dark:hover:bg-slate-800 dark:border-gray-700 dark:text-gray-400 dark:hover:text-white"
                   data-hs-collapse="#navbar-collapse-with-animation"
                   aria-controls="navbar-collapse-with-animation" aria-label="Toggle navigation"
@@ -39,7 +39,7 @@ const Navbar = () => {
               <Dropdown title={currentUser.name} />
             </div>
           </div>
-          <div id="navbar-collapse-with-animation" className="hs-collapse absolute z-1000 bg-gray-50 dark:bg-gray-800 sm:relative left-0 right-0 hidden overflow-hidden transition-all duration-300 basis-full grow sm:block">
+          <div id="navbar-collapse-with-animation" className="hs-collapse pl-4 pb-4 sm:p-0 border-[1px] border-gray-600 sm:border-0 absolute z-1000 bg-gray-50 dark:bg-gray-800 sm:relative left-0 right-0 hidden overflow-hidden basis-full grow sm:block">
             <div className="flex flex-col gap-y-4 gap-x-0 mt-5 sm:flex-row sm:items-center sm:justify-end sm:gap-y-0 sm:gap-x-7 sm:mt-0 sm:pl-7">
               <NavLink className={getLinkCLasses} to="/" aria-current="page" end>
                 Главная

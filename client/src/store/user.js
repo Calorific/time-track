@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 import httpService from '../services/http.service'
 import { clearProjects, setProjects } from './projects'
 import { clearRecords, setRecords } from './records'
+import cookieService from '../services/cookie.service'
 
 const initialState = {
   currentUser: null,
@@ -30,6 +31,14 @@ const usersSlice = createSlice({
     currentProjectChanged: (state, action) => {
       state.currentUser.currentProject = action.payload
     },
+    typesUpdated: (state, action) => {
+      state.currentUser.projectTypes = action.payload
+      state.errors = {}
+      state.loading = false
+    },
+    themeChanged: (state, action) => {
+      state.currentUser.theme = action.payload
+    },
     userLoggedOut: state => {
       state.currentUser = null
       state.errors = {}
@@ -39,7 +48,7 @@ const usersSlice = createSlice({
 })
 
 const { reducer: userReducer, actions } = usersSlice
-const { userRequested, userRequestSuccess, userRequestFail, userLoggedOut, currentProjectChanged } = actions
+const { userRequested, userRequestSuccess, userRequestFail, userLoggedOut, currentProjectChanged, themeChanged, typesUpdated } = actions
 
 export const clearUserData = () => dispatch => {
   dispatch(userLoggedOut())
@@ -66,12 +75,39 @@ export const changeCurrentProject = projectId => async dispatch => {
   }
 }
 
+export const changeTheme = theme => async dispatch => {
+  dispatch(themeChanged(theme))
+  cookieService.setTheme(theme)
+
+  try {
+    await httpService.patch('/user', { theme })
+  } catch (e) {
+    const data = e?.response?.data
+    dispatch(userRequestFail(data?.errors || { message: e.code }))
+    return data || { errors: { message: e.code } }
+  }
+}
+
+export const updateTypes = types => async dispatch => {
+  dispatch(userRequested())
+  try {
+    await httpService.patch('/user', { types })
+    dispatch(typesUpdated(types))
+  } catch (e) {
+    console.log(e?.response?.data)
+    const data = e?.response?.data
+    dispatch(userRequestFail(data?.errors || { message: e.code }))
+    return data || { errors: { message: e.code } }
+  }
+}
 
 export const loadCurrentUserData = () => async dispatch => {
   dispatch(userRequested())
+
   try {
     const { data } = await httpService.get('user/data')
     dispatch(addUserData(data))
+    cookieService.setTheme(data.theme)
   } catch (e) {
     const data = e?.response?.data
     dispatch(userRequestFail(data?.errors || { message: e.code }))
@@ -84,6 +120,8 @@ export const getCurrentUser = () => state => state.user.currentUser
 export const getCurrentProjectId = () => state => state.user.currentUser?.currentProject
 
 export const getProjectTypes = () => state => state.user.currentUser?.projectTypes
+
+export const getUserLoading = () => state => state.user.loading
 
 export const getUserErrors = () => state => state.user.errors
 

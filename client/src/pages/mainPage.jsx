@@ -6,9 +6,10 @@ import ProjectInfo from '../components/common/app/projectInfo'
 import RecordTime from '../components/mainPage/recordTime'
 import CreateRecord from '../components/mainPage/createRecord'
 import { getProject, getProjectsList } from '../store/projects'
-import CardWrapper from '../components/common/app/cardWrapper'
 import cookieService from '../services/cookie.service'
 import { computeCurrentRecordTime } from '../utils/computeCurrentRecordTime'
+import Divider from '../components/common/app/divider'
+import CardWrapper from '../components/common/app/cardWrapper'
 
 const MainPage = () => {
   const dispatch = useDispatch()
@@ -18,7 +19,7 @@ const MainPage = () => {
   const computeTime = useCallback(computeCurrentRecordTime, [])
 
   const [time, setTime] = useState(computeTime)
-  const [selectValue, setSelectValue] = useState(currentProject && { value: currentProject._id, label: currentProject.title })
+  const [selectValue, setSelectValue] = useState(currentProject?._id)
 
   const options = projects.map(p => ({ value: p._id, label: p.title }))
 
@@ -38,25 +39,25 @@ const MainPage = () => {
   
   if (!projects || !projects.length)
     return (
-      <CardWrapper>
-        <h2 className='text-xl'>Вы еще не создали ни одного проекта</h2>
-      </CardWrapper>
+        <div className='h-full w-full flex justify-center items-start pb-5 mt-16'>
+          <CardWrapper>
+            <h2 className="text-md sm:text-xl dark:text-gray-200 text-center">Вы еще не создали ни одного проекта</h2>
+          </CardWrapper>
+        </div>
     )
 
   return (
     <div className='h-full w-full flex justify-center items-start pb-5 mt-16'>
-      <CardWrapper externalClasses='min-w-[310px] max-w-[600px] sm:min-w-[540px] mx-2'>
+      <CardWrapper externalClasses='min-w-[310px] max-w-[600px] sm:min-w-[540px] md:min-w-[600px] !p-0 mx-2'>
         <div className="flex justify-between bg-gray-100 border-b rounded-t-xl py-2 px-4 md:py-3 md:px-5 dark:bg-gray-800 dark:border-gray-700">
           <p className="mt-2 text-sm text-gray-500 dark:text-gray-500 align-middle">
             Текущий проект
           </p>
-          <SelectField name='projectSelect' options={options} value={selectValue} onChange={handleChange}
-                       placeholder={'Выберите текущий проект'} isSearchable={true} noOptionsMessage='Ничего не найдено'
-          />
+          <SelectField name='project' options={options} value={selectValue} onChange={handleChange} label='Текущий проект' />
         </div>
         <ProjectInfo project={currentProject} />
         {currentProject ? <>
-          <div className='px-4 md:px-5'><hr /></div>
+          <div className='px-4 md:px-5'><Divider /></div>
           <RecordTime onTimeChange={handleTimeChange} time={time} />
           <CreateRecord time={time} currentProjectId={currentProject._id} />
         </> : ''}

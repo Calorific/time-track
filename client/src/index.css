@@ -18,17 +18,3 @@ body {
 p {
   word-break: break-word;
 }
-
-.select p {
-  color: black !important;;
-}
-
-.select > div > div:first-child {
-  border: 1px solid #d1d5db;
-  border-radius: 0.125rem;
-}
-
-.select div div {
-  background-color: #f9fafb;
-  border-radius: 0.125rem;
-}

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 import { formatTime } from '../../../utils/formatTime'
 import { getProjectTime } from '../../../utils/getProjectTime'
@@ -9,16 +9,17 @@ import { NavLink } from 'react-router-dom'
 
 const ProjectInfo = ({ project, alwaysShow }) => {
   const records = useSelector(getProjectRecords(project?._id))
+  const desc = useRef()
   const [show, setShow] = useState(false)
   const [canHide, setCanHide] = useState(!alwaysShow)
 
   useEffect(() => {
     if (alwaysShow || !project) return
-    const desc = document.querySelector('.js-desc')
-    desc.classList.remove('truncate')
 
-    if (desc.offsetHeight > 24) {
-      desc.classList.add('truncate')
+    desc.current.classList.remove('truncate')
+
+    if (desc.current.offsetHeight > 24) {
+      desc.current.classList.add('truncate')
       setCanHide(true)
     } else {
       setCanHide(false)
@@ -44,7 +45,7 @@ const ProjectInfo = ({ project, alwaysShow }) => {
       <p className='dark:text-gray-400 pt-1'>
         На проект потрачено времени: <span className='text-cyan-600 font-time'>{formatTime(getProjectTime(records))}</span>
       </p>
-      <p className={'js-desc mt-2 text-gray-800 dark:text-gray-400 text-justify ' + (!show && canHide ? 'truncate' : '')}>
+      <p ref={desc} className={'mt-2 text-gray-800 dark:text-gray-300 text-justify ' + (!show && canHide ? 'truncate' : '')}>
         {project.description}
       </p>
       {canHide ? <button className="text-blue-500 underline" onClick={() => setShow(show => !show)}>

@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import CardWrapper from '../common/app/cardWrapper'
 import { formatTime } from '../../utils/formatTime'
 import { useDispatch } from 'react-redux'
 import toast from 'react-hot-toast'
@@ -8,6 +7,7 @@ import ToastUndoDelete from '../common/app/toastUndoDelete'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faXmark } from '@fortawesome/free-solid-svg-icons'
 import { cancelRecordDelete, deleteRecord, deletingRecord } from '../../store/records'
+import CardWrapper from '../common/app/cardWrapper'
 
 const Record = ({ record, projectId }) => {
   const dispatch = useDispatch()
@@ -32,7 +32,7 @@ const Record = ({ record, projectId }) => {
   if (record.isDeleting)
     return ''
 
-  return <CardWrapper externalClasses='relative w-[250px]'>
+  return <CardWrapper externalClasses='relative w-[250px] !mx-0'>
     <div className='h-full'>
       <div className="bg-gray-100 border-b rounded-t-xl py-1 px-2 dark:bg-gray-800 dark:border-gray-700">
         <p className="text-xs text-gray-500 dark:text-gray-500 align-middle">

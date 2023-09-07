@@ -15,12 +15,13 @@ const App = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const location = useLocation()
-  const keepLoggedIn = cookieService.getKeepLoggedIn()
   const currentUserData = useSelector(getCurrentUser())
-
+  const keepLoggedIn = cookieService.getKeepLoggedIn()
+  const theme = cookieService.getTheme() || 'light'
 
   useEffect(() => {
     ;(async () => {
+      document.body.classList[theme === 'dark' ? 'add' : 'remove']('dark')
       if (keepLoggedIn && !currentUserData) {
         const data = await dispatch(loadCurrentUserData())
         const errors = data?.errors
@@ -28,20 +29,21 @@ const App = () => {
           dispatch(logOut(navigate))
       }
     })()
-  }, [keepLoggedIn, currentUserData, dispatch, navigate])
-
+  }, [keepLoggedIn, currentUserData, dispatch, navigate, theme])
 
   const elements = useRoutes(routes(!!keepLoggedIn || currentUserData, location))
 
   window.addEventListener('beforeunload', () => {
-    if (!cookieService.getKeepLoggedIn() && cookieService.getAccessToken())
+    if (!cookieService.getKeepLoggedIn() && cookieService.getAccessToken()) {
+      cookieService.deleteAllCookies()
       authService.logOut().then()
+    }
     return null
   })
 
   if (keepLoggedIn && !currentUserData)
     return (
-      <div className="w-screen h-screen flex justify-center items-center">
+      <div className="w-screen h-screen flex justify-center items-center dark:bg-gray-800">
         <Loader />
       </div>
     )

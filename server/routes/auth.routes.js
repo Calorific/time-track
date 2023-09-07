@@ -42,6 +42,7 @@ authRouter.post('/signup', [
         ...req.body,
         password: hashedPassword,
         projectTypes: ['Задача'],
+        theme: 'light',
         projects: [
           {
             title: 'Test',

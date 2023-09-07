@@ -10,6 +10,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import { addRecord, getRecordLoading } from '../../store/records'
 import { parseTime } from '../../utils/parseTime'
 import Loader from '../common/app/loader'
+import { Dialog } from '@material-tailwind/react'
+import SuccessButton from '../common/app/successButton'
+import DangerButton from '../common/app/dangerButton'
 
 const CreateRecord = ({ time, currentProjectId }) => {
   const dispatch = useDispatch()
@@ -20,6 +23,7 @@ const CreateRecord = ({ time, currentProjectId }) => {
   const validationScheme = yup.object().shape(recordValidations)
 
   const onSubmit = async record => {
+    handleShow()
     const payload = { ...record }
     payload.description ||= 'Без описания'
     payload.projectId = currentProjectId
@@ -31,24 +35,25 @@ const CreateRecord = ({ time, currentProjectId }) => {
       setRecordErrors(data.errors.formErrors)
   }
 
-  if (!show)
-    return (
-      <div className="px-4 md:px-5 pb-2 md:pb-3">
-        <Button bgColor='bg-green-500 hover:bg-green-700' text='Создать запись' onClick={() => setShow(true)} />
-      </div>
-    )
+  const handleShow = () => {
+    setShow(prevState => !prevState)
+  }
 
-  if (loading)
-    return <div className='flex justify-center my-4'><Loader /></div>
+  return <>
+    {!loading ? <div className="px-4 md:px-5 pb-2 md:pb-3">
+      <SuccessButton onClick={handleShow}>Создать запись</SuccessButton>
+    </div> : <div className='flex justify-center my-4'><Loader /></div>}
+    <Dialog open={show && !loading} handler={handleShow} className='dark:bg-gray-800 p-4' aria-modal size='xs'>
+      <h2 className="text-3xl dark:text-gray-200 mb-2">Новая запись</h2>
+      <FormComponent classes='px-2' {...{validationScheme, onSubmit, serverErrors: recordErrors }}>
+        <TextField name='description' label='Описание' />
+        <TextField name='time' label='Затраченное время' placeholder={formatTime(time)} />
+        <Button type='submit' text='Создать' classes='mr-2' />
+        <DangerButton type='button' onClick={handleShow}>Отмена</DangerButton>
+      </FormComponent>
+    </Dialog>
+  </>
 
-  return  (
-    <FormComponent classes={'px-4 md:px-5 pb-2 md:pb-3'} {...{validationScheme, onSubmit, serverErrors: recordErrors }}>
-      <TextField name='description' label='Описание' />
-      <TextField name='time' label='Затраченное время' placeholder={formatTime(time)} />
-      <Button type='submit' text='Создать' classes='mr-2' />
-      <Button type='button' text='Отмена' onClick={() => setShow(false)} bgColor='bg-red-500 hover:bg-red-700' />
-    </FormComponent>
-  )
 }
 
 CreateRecord.propTypes = {

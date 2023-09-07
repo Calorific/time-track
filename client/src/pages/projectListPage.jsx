@@ -8,6 +8,7 @@ import ProjectSearch from '../components/projectListPage/projectSearch'
 import Button from '../components/common/app/button'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCirclePlus } from '@fortawesome/free-solid-svg-icons'
+import SuccessButton from '../components/common/app/successButton'
 
 
 
@@ -55,14 +56,11 @@ const ProjectListPage = () => {
     <div className='flex justify-center pt-5'>
       <div className='w-full sm:w-11/12 px-5 sm:px-0 flex justify-center flex-col'>
         <div className='flex gap-2 flex-wrap items-center pb-3'>
-          <ProjectSearch value={search} onChange={handleSearch} />
+          <ProjectSearch value={search} onChange={handleSearch} classes='w-52 sm:w-[315px]' placeholder='Поиск по названию' />
           <NavLink to='/projects/create'>
-            <Button bgColor='hidden sm:inline-block bg-green-500 hover:bg-green-700'>
-              <FontAwesomeIcon icon={faCirclePlus} /> Создать проект
-            </Button>
-            <Button bgColor='inline-block sm:hidden bg-green-500 hover:bg-green-700'>
-              <FontAwesomeIcon icon={faCirclePlus} />
-            </Button>
+            <SuccessButton>
+              <FontAwesomeIcon icon={faCirclePlus} /> <span className='hidden sm:inline-block'>Создать проект</span>
+            </SuccessButton>
           </NavLink>
         </div>
         {filteredProjects.length ? <>

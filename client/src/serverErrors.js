@@ -22,7 +22,13 @@ const serverErrors = {
   maxLengthProjectTitle: 'PROJECT_TITLE_MAX_LENGTH_50',
   typeRequired: 'TYPE_REQUIRED',
   maxLengthProjectType: 'PROJECT_TYPE_MAX_LENGTH_25',
-  projectExists: 'PROJECT_EXISTS'
+  projectExists: 'PROJECT_EXISTS',
+  recordNotFound: 'RECORD_NOT_FOUND',
+  descriptionRequired: 'DESCRIPTION_REQUIRED',
+  invalidProjectId: 'INVALID_PROJECT_ID',
+  invalidTheme: 'INVALID_THEME',
+  typeExists: 'TYPE_EXISTS',
+  incorrectTypes: 'INCORRECT_TYPES'
 }
 
 export default serverErrors

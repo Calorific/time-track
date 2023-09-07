@@ -9,7 +9,7 @@ import CheckboxField from '../components/common/form/checkboxField'
 import { getAuthLoading, signUp } from '../store/auth'
 import { useDispatch, useSelector } from 'react-redux'
 import Loader from '../components/common/app/loader'
-import FormWrapper from '../components/common/app/formWrapper'
+import CardWrapper from '../components/common/app/cardWrapper'
 
 const RegisterPage = () => {
   const dispatch = useDispatch()
@@ -34,11 +34,9 @@ const RegisterPage = () => {
   }
 
   return <>
-    <FormWrapper externalClasses={authLoading ? 'hidden' : ''}>
-      <h2 className="text-3xl dark:text-gray-200">Регистрация</h2>
-      <FormComponent classes="mt-4" onSubmit={handleSubmit} validationScheme={validationScheme}
-                     defaultData={defaultValues} serverErrors={authErrors}
-      >
+    <CardWrapper externalClasses={'min-w-[310px] sm:min-w-[450px] p-4 ' + (authLoading ? 'hidden' : '')}>
+      <h2 className="text-3xl dark:text-gray-200 mb-4">Регистрация</h2>
+      <FormComponent onSubmit={handleSubmit} validationScheme={validationScheme} defaultData={defaultValues} serverErrors={authErrors}>
         <TextField name="name" label="Имя" autoFocus />
         <TextField name="email" label="Email" />
         <TextField name="password" type="password" label="Пароль" />
@@ -46,10 +44,9 @@ const RegisterPage = () => {
         <Button type="submit" text="Зарегистрироваться" />
       </FormComponent>
       <p className='dark:text-gray-200'>Уже есть аккаунт? <NavLink to="/auth/login" className="text-blue-600">Войти</NavLink></p>
-    </FormWrapper>
+    </CardWrapper>
     {authLoading ? <Loader /> : ''}
   </>
-
 }
 
 export default RegisterPage

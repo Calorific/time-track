@@ -22,15 +22,11 @@ projectsRouter.post('/add', auth, [
     try {
       const user = await User.findOne({ _id: req.userId })
       if (!user)
-        return res.status(409).json({
-          errors: { message: serverErrors.userNotFound }
-        })
+        return res.status(409).json(parseErrors(serverErrors.userNotFound, false))
 
       const projectExists = user.projects.find(p => p.title === req.body.title)
       if (projectExists)
-        return res.status(409).json({
-          errors: { formErrors: { title: serverErrors.projectExists } }
-        })
+        return res.status(409).json(parseErrors({ errors: { title: serverErrors.projectExists } }))
 
       user.projects.push(req.body)
 
@@ -40,9 +36,7 @@ projectsRouter.post('/add', auth, [
       return res.status(201).json(userProjects[userProjects.length - 1])
     } catch (e) {
       console.log(chalk.red('[SERVER ERROR POST /projects/add]', e.message))
-      return res.status(500).json({
-        errors: { message: serverErrors.internalError }
-      })
+      return res.status(500).json(parseErrors(serverErrors.internalError, false))
     }
   }
 ])
@@ -56,23 +50,18 @@ projectsRouter.post('/edit', auth, [
 
     try {
       const { projectId, ...project } = req.body
+
       const user = await User.findOne({ _id: '64ef62b532a1e022ec550eed' })
       if (!user)
-        return res.status(409).json({
-          errors: { message: serverErrors.userNotFound }
-        })
+        return res.status(409).json(parseErrors(serverErrors.userNotFound, false))
 
       const projectIdx = user.projects.findIndex(p => p._id.toString() === projectId)
       if (projectIdx === -1)
-        return res.status(409).json({
-          errors: { formErrors: { title: serverErrors.projectNotFound } }
-        })
+        return res.status(409).json(parseErrors({ errors: { title: serverErrors.projectNotFound } }))
 
       const duplicateTitle = user.projects.some((p, i) => p.title === project.title && i !== projectIdx)
       if (duplicateTitle)
-        return res.status(409).json({
-          errors: { formErrors: { title: serverErrors.projectExists } }
-        })
+        return res.status(409).json(parseErrors({ errors: { title: serverErrors.projectExists } }))
 
       user.projects[projectIdx].title = project.title
       user.projects[projectIdx].description = project.description
@@ -83,9 +72,7 @@ projectsRouter.post('/edit', auth, [
       return res.status(200).json({ projectIdx, project: updatedUser.projects[projectIdx] })
     } catch (e) {
       console.log(chalk.red('[SERVER ERROR POST /projects/edit]', e.message))
-      return res.status(500).json({
-        errors: { message: serverErrors.internalError }
-      })
+      return res.status(500).json(parseErrors(serverErrors.internalError, false))
     }
   }
 ])
@@ -97,14 +84,8 @@ projectsRouter.delete('/remove/:projectId', auth, async (req, res) => {
     })
     res.sendStatus(200)
   } catch (e) {
-    if (e.model)
-      return res.status(404).json({
-        errors: { message: serverErrors.projectNotFound }
-      })
     console.log(chalk.red('[SERVER ERROR DELETE /projects/remove]', e.message))
-    return res.status(500).json({
-      errors: { message: serverErrors.internalError }
-    })
+    return res.status(500).json(parseErrors(serverErrors.internalError, false))
   }
 })
 
