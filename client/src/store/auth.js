@@ -43,6 +43,7 @@ export const signUp = ({ payload, navigate }) => async dispatch => {
   dispatch(authRequested())
   try {
     const { data } = await authService.register(payload)
+    cookieService.setTheme(data.theme)
     dispatch(authRequestSuccess(true))
     dispatch(addUserData(data))
     navigate('/')
@@ -57,6 +58,7 @@ export const logIn = ({ payload, navigate }) => async dispatch => {
   dispatch(authRequested())
   try {
     const { data } = await authService.logIn(payload)
+    cookieService.setTheme(data.theme)
     dispatch(authRequestSuccess(true))
     dispatch(addUserData(data))
     navigate('/')
@@ -72,6 +74,8 @@ export const logOut = navigate => async dispatch => {
     await authService.logOut()
     dispatch(authRequestSuccess(false))
     dispatch(clearUserData())
+    cookieService.deleteAllCookies(['theme'])
+
     navigate('/auth/login')
   } catch (e) {
     const data = e?.response?.data

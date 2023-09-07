@@ -1,48 +1,58 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
+import { Typography, Menu, MenuHandler, MenuList, MenuItem, } from "@material-tailwind/react"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faArrowRightFromBracket, faChevronDown, faUser } from '@fortawesome/free-solid-svg-icons'
+import { useDispatch } from 'react-redux'
+import { logOut } from '../../store/auth'
+import { useNavigate } from 'react-router-dom'
 
-const Dropdown = ({ title, classes, items }) => {
+const Dropdown = ({ title, classes }) => {
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+
+  const menuItemClasses = 'flex items-center gap-2 rounded dark:hover:!bg-gray-700 dark:hover:!text-gray-300 dark:focus:!text-gray-300 dark:focus:!bg-gray-700'
+
+  const goToProfile = () => {
+    navigate('/profile')
+  }
+
+  const logout = () => {
+    dispatch(logOut(navigate))
+  }
 
   return (
-    <>
-      <div className={"hs-dropdown relative inline-flex " + classes}>
-        <button
-            id="hs-dropdown-with-title"
-            type="button"
-            className="hs-dropdown-toggle py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md bg-gray-50
-                     font-medium text-gray-700 align-middle hover:text-gray-500 transition-all text-sm dark:bg-gray-800
-                      dark:hover:bg-gray-900 dark:text-gray-400 outline-none"
-        >
-          {title}
-          <svg className="hs-dropdown-open:rotate-180 w-2.5 h-2.5 text-gray-600" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M2 5L8.16086 10.6869C8.35239 10.8637 8.64761 10.8637 8.83914 10.6869L15 5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-          </svg>
-        </button>
-
-        <div className="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100
-                     opacity-0 hidden bg-gray-50 shadow-md rounded-lg p-2 mt-2 divide-y divide-gray-200
-                      dark:bg-gray-800 dark:border dark:border-gray-700 dark:divide-gray-700"
-             style={{ marginTop: -17 }}
-             aria-labelledby="hs-dropdown-with-title"
-        >
-          <div className="py-2 first:pt-0 last:pb-0">
-            {items && items.map((item, i) => (
-                <button className="flex items-center gap-x-3.5 rounded-md text-sm text-gray-800 hover:bg-gray-100
-                      dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300 transition-colors" key={i}>
-                  {item}
-                </button>
-            ))}
-          </div>
-        </div>
-      </div>
-    </>
+    <span className={classes}>
+      <Menu open={isMenuOpen} handler={setIsMenuOpen} placement="bottom-end">
+        <MenuHandler>
+          <button type="button"
+                  className="hs-dropdown-toggle py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md bg-gray-50
+                     font-medium text-gray-700 align-middle hover:text-gray-500 text-sm dark:bg-gray-800
+                     dark:hover:bg-gray-900 dark:text-gray-400 outline-none"
+          >
+            {title}
+            <FontAwesomeIcon icon={faChevronDown} className={`h-3 w-3 transition-transform ${isMenuOpen ? 'rotate-180' : ''}`} />
+          </button>
+        </MenuHandler>
+        <MenuList className="p-1 dark:bg-slate-800 dark:border dark:border-gray-700">
+          <MenuItem onClick={goToProfile} className={menuItemClasses}>
+            <FontAwesomeIcon icon={faUser} />
+            <Typography as="span" variant="small" className="font-normal">Профиль</Typography>
+          </MenuItem>
+          <MenuItem onClick={logout} className={menuItemClasses}>
+            <FontAwesomeIcon icon={faArrowRightFromBracket} />
+            <Typography as="span" variant="small" className="font-normal">Выход</Typography>
+          </MenuItem>
+        </MenuList>
+      </Menu>
+    </span>
   )
 }
 
 Dropdown.propTypes = {
   title: PropTypes.string,
   classes: PropTypes.string,
-  items: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node,), PropTypes.node])
 }
 
 export default Dropdown

@@ -10,7 +10,7 @@ const recordSchema = new Schema({
 const projectSchema = new Schema({
   title: { type: String, required: true },
   type: { type: String, required: true },
-  description: String,
+  description: { type: String, required: true },
   records: [recordSchema]
 }, {
   timestamps: true
@@ -21,6 +21,7 @@ const userSchema = new Schema({
   email: { type: String, required: true },
   password: { type: String, required: true },
   projectTypes: { type: [String], required: true },
+  theme: { type: String, required: true },
   projects: [projectSchema],
   currentProject: String
 }, {

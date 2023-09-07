@@ -1,33 +1,15 @@
 import React from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { getCurrentUser } from '../../store/user'
-import { NavLink, useNavigate } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import Dropdown from './dropdown'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArrowRightFromBracket, faUser } from '@fortawesome/free-solid-svg-icons'
-import { logOut } from '../../store/auth'
 
 const Navbar = () => {
-  const navigate = useNavigate()
-  const dispatch = useDispatch()
   const currentUser = useSelector(getCurrentUser())
 
-  const getLinkCLasses = ({ isActive }) => 'font-medium sm:py-6 ' + (isActive
+  const getLinkCLasses = ({ isActive }) => 'font-medium sm:py-6 font-roboto ' + (isActive
         ? 'font-medium text-blue-600 sm:py-6 dark:text-blue-500'
         : 'text-gray-500 hover:text-gray-400 dark:text-gray-400 dark:hover:text-gray-500')
-
-  const logout = () => {
-    dispatch(logOut(navigate))
-  }
-
-  const dropdownItems = [
-    <div className='flex items-center gap-x-3.5 py-2 px-3'>
-      <FontAwesomeIcon icon={faUser} />Профиль
-    </div>,
-    <div className='flex items-center gap-x-3.5 py-2 px-3' onClick={logout}>
-      <FontAwesomeIcon icon={faArrowRightFromBracket} />Выход
-    </div>
-  ]
 
   return (
       <header className="flex flex-wrap sm:justify-start sm:flex-nowrap z-50 w-full bg-gray-50 border-b border-gray-200 text-sm py-3 sm:py-0 dark:bg-gray-800 dark:border-gray-700">
@@ -42,8 +24,8 @@ const Navbar = () => {
             <div className="sm:hidden">
               <button type="button"
                   className="hs-collapse-toggle p-2 inline-flex justify-center items-center gap-2 rounded-md border
-                    font-medium bg-white text-gray-700 shadow-sm align-middle hover:bg-gray-50 transition-all text-sm dark:bg-slate-900
-                    dark:hover:bg-slate-800 dark:border-gray-700 dark:text-gray-400 dark:hover:text-white"
+                    font-medium text-gray-700 shadow-sm align-middle bg-gray-50 text-sm mr-1
+                    dark:bg-slate-900 dark:hover:bg-slate-800 dark:border-gray-700 dark:text-gray-400 dark:hover:text-white"
                   data-hs-collapse="#navbar-collapse-with-animation"
                   aria-controls="navbar-collapse-with-animation" aria-label="Toggle navigation"
               >
@@ -54,10 +36,10 @@ const Navbar = () => {
                   <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
                 </svg>
               </button>
-              <Dropdown title={currentUser.name} items={dropdownItems} />
+              <Dropdown title={currentUser.name} />
             </div>
           </div>
-          <div id="navbar-collapse-with-animation" className="hs-collapse absolute sm:relative left-0 right-0 hidden overflow-hidden transition-all duration-300 basis-full grow sm:block">
+          <div id="navbar-collapse-with-animation" className="hs-collapse pl-4 pb-4 sm:p-0 border-[1px] border-gray-600 sm:border-0 absolute z-1000 bg-gray-50 dark:bg-gray-800 sm:relative left-0 right-0 hidden overflow-hidden basis-full grow sm:block">
             <div className="flex flex-col gap-y-4 gap-x-0 mt-5 sm:flex-row sm:items-center sm:justify-end sm:gap-y-0 sm:gap-x-7 sm:mt-0 sm:pl-7">
               <NavLink className={getLinkCLasses} to="/" aria-current="page" end>
                 Главная
@@ -68,7 +50,7 @@ const Navbar = () => {
               <NavLink className={getLinkCLasses} to="/statistics" aria-current="page" end>
                 Статистика
               </NavLink>
-              <Dropdown title={currentUser.name} classes='hidden sm:block' items={dropdownItems} />
+              <Dropdown title={currentUser.name} classes='hidden sm:block' />
             </div>
           </div>
         </nav>

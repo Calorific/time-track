@@ -10,7 +10,8 @@ const GoBackButton = ({ classes, type }) => {
   }
 
   return (
-    <Button type={type} text="Назад" bgColor='bg-amber-500 hover:bg-amber-600' classes={classes + ' dark:text-slate-200'} onClick={goBack} />
+    <Button type={type} text="Назад" bgColor='bg-amber-500 hover:bg-amber-600 dark:bg-teal-500 dark:hover:bg-teal-600'
+            classes={classes + ' dark:text-slate-200'} onClick={goBack} />
   )
 }
 

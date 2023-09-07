@@ -2,7 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 const Badge = ({ text, color, externalClasses }) => {
-  const classes = `inline-flex items-center gap-1.5 py-1.5 px-3 mx-2 rounded-full text-xs font-medium ${color} ${externalClasses} `
+  const classes = `inline-flex items-center text-center whitespace-pre break-keep gap-1.5 py-1.5 px-3 mx-2 
+    rounded-full text-xs font-medium ${color} ${externalClasses} `
 
   return (
     <span className={classes}>
@@ -12,7 +13,8 @@ const Badge = ({ text, color, externalClasses }) => {
 }
 
 Badge.defaultProps = {
-  color: 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
+  color: 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200',
+  externalClasses: ''
 }
 
 Badge.propTypes = {

@@ -30,14 +30,14 @@ const FormComponent = ({ children, classes, validationScheme, onSubmit, defaultD
   }, [validationScheme, setErrors])
 
   const isValid = Object.keys(errors).length === 0
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault()
     if (!validate(data))
       return
 
-    if (clear)
+    const errors = await onSubmit(data)
+    if (!errors && clear)
       setData(defaultData)
-    onSubmit(data)
   }
 
   useEffect(() => {
@@ -65,16 +65,16 @@ const FormComponent = ({ children, classes, validationScheme, onSubmit, defaultD
   const clonedElements = React.Children.map(children, child => {
     let config = {}
 
-    if (['submit', 'button'].includes(child.props.type))
-      config = { ...child.props, disabled: !isValid }
-    else if (!child.props.name)
+    if (['submit', 'button'].includes(child?.props.type))
+      config = { ...child?.props, disabled: !isValid }
+    else if (!child?.props.name)
       throw new Error('Name property is required for field components')
     else
       config = {
-      ...child.props,
+      ...child?.props,
       onChange: handleChange,
-      value: data[child.props.name] || '',
-      error: errors[child.props.name],
+      value: data[child?.props.name] || '',
+      error: errors[child?.props.name],
       onKeyDown: handleKeyDown,
     }
 

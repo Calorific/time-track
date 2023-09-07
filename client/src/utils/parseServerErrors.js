@@ -51,6 +51,16 @@ export const parseServerErrors = error => {
       return 'Тип не должен превышать 25 символов'
     case serverErrors.projectExists:
       return 'Проект с таким названием уже существует'
+    case serverErrors.descriptionRequired:
+      return 'Описание не может быть пустым'
+    case serverErrors.invalidProjectId:
+      return 'Некорректное значение ID проекта'
+    case serverErrors.invalidTheme:
+      return 'Некорректное значение темы'
+    case serverErrors.typeExists:
+      return 'Такой тип уже существует'
+    case serverErrors.incorrectTypes:
+      return 'Переданы некорректные типы проектов'
     default:
       return 'На сервере произошла непредвиденная ошибка. Попробуйте позже'
   }

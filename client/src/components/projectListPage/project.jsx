@@ -9,9 +9,11 @@ import Button from '../common/app/button'
 import { NavLink } from 'react-router-dom'
 import toast from 'react-hot-toast'
 import ToastUndoDelete from '../common/app/toastUndoDelete'
-import { faPenToSquare, faXmark } from '@fortawesome/free-solid-svg-icons'
+import { faCirclePlus, faPenToSquare, faXmark } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { deleteProject } from '../../store/projects'
+import SuccessButton from '../common/app/successButton'
+import DangerButton from '../common/app/dangerButton'
 
 const Project = ({ project }) => {
   const dispatch = useDispatch()
@@ -49,14 +51,13 @@ const Project = ({ project }) => {
       </td>
       <td className="px-6 py-2 w-[20%] whitespace-nowrap">
         <NavLink to={`/projects/${project._id}/edit`}>
-          <Button bgColor='bg-green-500 hover:bg-green-700' classes='mr-2 my-2'>
+          <SuccessButton className='mr-2'>
             <FontAwesomeIcon icon={faPenToSquare} />
-          </Button>
+          </SuccessButton>
         </NavLink>
-
-        <Button bgColor='bg-red-500 hover:bg-red-700' classes='m-0' onClick={handleDelete}>
+        <DangerButton onClick={handleDelete}>
           <FontAwesomeIcon icon={faXmark} />
-        </Button>
+        </DangerButton>
       </td>
     </tr>
   )

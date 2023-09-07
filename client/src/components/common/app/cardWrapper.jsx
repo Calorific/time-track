@@ -2,12 +2,11 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 const CardWrapper = ({ children, externalClasses }) => {
-
   return (
-      <div className={`flex flex-col bg-white border shadow-sm rounded-xl dark:bg-gray-800 dark:border-gray-700
-      dark:shadow-slate-700/[.7] justify-center ${externalClasses || ''}`}>
-        {children}
-      </div>
+    <div className={`bg-gray-50 border border-gray-200 rounded-lg shadow dark:bg-gray-800
+      dark:border-gray-700 mx-2 ${externalClasses || ''}`}>
+      {children}
+    </div>
   )
 }
 

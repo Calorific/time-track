@@ -33,18 +33,13 @@ recordsRouter.post('/add', auth, [
       )
 
       if (!data)
-        return res.status(404).json({
-          errors: { message: serverErrors.projectNotFound }
-        })
+        return res.status(404).json(parseErrors(serverErrors.projectNotFound, false))
 
       const newRecord = data.projects.find(p => p._id.toString() === projectId).records.pop()
       return res.status(201).json(newRecord)
     } catch (e) {
       console.log(chalk.red('[SERVER ERROR POST /records/add]', e.message))
-      return res.status(500).json({
-        errors: { message: serverErrors.internalError }
-      })
-
+      return res.status(500).json(parseErrors(serverErrors.internalError, false))
     }
   }
 ])
@@ -61,15 +56,8 @@ recordsRouter.delete('/remove/:projectId/:recordId',auth, async (req, res) => {
     )
     return res.sendStatus(200)
   } catch (e) {
-    console.log(e)
-    if (e.model)
-      return res.status(404).json({
-        errors: { message: serverErrors.recordNotFound }
-      })
     console.log(chalk.red('[SERVER ERROR DELETE /projects/remove]', e.message))
-    return res.status(500).json({
-      errors: { message: serverErrors.internalError }
-    })
+    return res.status(500).json(parseErrors(serverErrors.internalError, false))
   }
 })
 
