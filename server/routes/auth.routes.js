@@ -43,25 +43,8 @@ authRouter.post('/signup', [
         password: hashedPassword,
         projectTypes: ['Задача'],
         theme: 'light',
-        projects: [
-          {
-            title: 'Test',
-            type: 'Задача',
-            description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Harum molestiae nostrum reprehenderit. Accusamus aliquid doloribus iure nesciunt nihil recusandae, rem.',
-            records: [
-              { description: 'Test description', timeSpent: 3600 }
-            ]
-          },
-          {
-            title: 'Second project',
-            type: 'Задача',
-            description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero, possimus?',
-            records: [
-              { description: 'Test description', timeSpent: 5145 }
-            ]
-          }
-        ]
       })
+
       const accessToken = await tokenService.generateAccessToken({ _id: newUser._id.toString() })
       const refreshToken = await tokenService.generateRefreshToken({ _id: newUser._id.toString() })
       await tokenService.save(newUser._id.toString(), refreshToken)
@@ -75,9 +58,7 @@ authRouter.post('/signup', [
       return res.status(201).json(user)
     } catch (e) {
       console.log(chalk.red('[SERVER ERROR POST /auth/signup]', e.message))
-      return res.status(500).json({
-        errors: { message: serverErrors.internalError }
-      })
+      return res.status(500).json(parseErrors(serverErrors.internalError, false))
     }
   }
 ])
@@ -119,9 +100,7 @@ authRouter.post('/login', [
       return res.status(200).json(user)
     } catch (e) {
       console.log(chalk.red('[SERVER ERROR POST /auth/login]', e.message))
-      return res.status(500).json({
-        errors: { message: serverErrors.internalError }
-      })
+      return res.status(500).json(parseErrors(serverErrors.internalError, false))
     }
   }
 ])
@@ -132,12 +111,10 @@ authRouter.post('/logout', async (req, res) => {
     res.clearCookie('accessToken')
     res.clearCookie('keepLoggedIn')
 
-    res.status(200).send()
+    res.sendStatus(200)
   } catch (e) {
     console.log(chalk.red('[SERVER ERROR POST /auth/logout]', e.message))
-    return res.status(500).json({
-      errors: { message: serverErrors.internalError }
-    })
+    return res.status(500).json(parseErrors(serverErrors.internalError, false))
   }
 })
 
@@ -151,9 +128,7 @@ authRouter.post('/refresh', async (req, res) => {
     const isValidToken = refreshToken && data && data._id === dbToken?.user?.toString()
 
     if (!isValidToken)
-      return res.status(401).json({
-        error: { message: serverErrors.unauthorized }
-      })
+      return res.status(401).json(parseErrors(serverErrors.unauthorized, false))
 
     const accessToken = await tokenService.generateAccessToken({ _id: data._id })
 
@@ -161,9 +136,7 @@ authRouter.post('/refresh', async (req, res) => {
     return res.status(201).json({})
   } catch (e) {
     console.log(chalk.red('[SERVER ERROR POST /auth/refresh]', e.message))
-    return res.status(500).json({
-      errors: { message: serverErrors.internalError }
-    })
+    return res.status(500).json(parseErrors(serverErrors.internalError, false))
   }
 })
 

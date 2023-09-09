@@ -25,7 +25,7 @@ const ProjectDetailsPage = () => {
   return (
     <div className='flex justify-center h-full w-full p-2 sm:p-5'>
       <div className='max-w-[calc(750px+1rem)] relative'>
-        <div className='max-w-[400px]'>
+        <div className='max-w-[310px] sm:max-w-[400px]'>
           <ProjectInfo project={project} alwaysShow={true} />
         </div>
         {records ? <div className="flex flex-wrap gap-2">

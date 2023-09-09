@@ -25,8 +25,6 @@ const LoginPage = () => {
   }
 
   const defaultData = {
-    email: 'a@mail.ru',
-    password: 'Test1234',
     keepLoggedIn: true
   }
 

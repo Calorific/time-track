@@ -27,11 +27,11 @@ const Dropdown = ({ title, classes }) => {
       <Menu open={isMenuOpen} handler={setIsMenuOpen} placement="bottom-end">
         <MenuHandler>
           <button type="button"
-                  className="hs-dropdown-toggle py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md bg-gray-50
+                  className="hs-dropdown-toggle py-3 pl-2 sm:pl-0 inline-flex justify-center items-center gap-2 rounded-md bg-gray-50
                      font-medium text-gray-700 align-middle hover:text-gray-500 text-sm dark:bg-gray-800
                      dark:hover:bg-gray-900 dark:text-gray-400 outline-none"
           >
-            {title}
+            <p className='max-w-[90px] truncate'>{title}</p>
             <FontAwesomeIcon icon={faChevronDown} className={`h-3 w-3 transition-transform ${isMenuOpen ? 'rotate-180' : ''}`} />
           </button>
         </MenuHandler>

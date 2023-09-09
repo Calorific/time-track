@@ -27,7 +27,7 @@ const CreateRecord = ({ time, currentProjectId }) => {
     const payload = { ...record }
     payload.description ||= 'Без описания'
     payload.projectId = currentProjectId
-    payload.time = parseTime(payload.time)
+    payload.time = parseTime(payload.time || '0')
 
     const data = await dispatch(addRecord(payload))
 
@@ -36,6 +36,7 @@ const CreateRecord = ({ time, currentProjectId }) => {
   }
 
   const handleShow = () => {
+    setRecordErrors({})
     setShow(prevState => !prevState)
   }
 
@@ -43,11 +44,11 @@ const CreateRecord = ({ time, currentProjectId }) => {
     {!loading ? <div className="px-4 md:px-5 pb-2 md:pb-3">
       <SuccessButton onClick={handleShow}>Создать запись</SuccessButton>
     </div> : <div className='flex justify-center my-4'><Loader /></div>}
-    <Dialog open={show && !loading} handler={handleShow} className='dark:bg-gray-800 p-4' aria-modal size='xs'>
+    <Dialog open={show} handler={handleShow} className={'dark:bg-gray-800 p-4 ' + (loading ? 'hidden' : '')} aria-modal size='xs'>
       <h2 className="text-3xl dark:text-gray-200 mb-2">Новая запись</h2>
-      <FormComponent classes='px-2' {...{validationScheme, onSubmit, serverErrors: recordErrors }}>
+      <FormComponent classes='px-2' {...{validationScheme, onSubmit, serverErrors: recordErrors }} clear={true}>
+        <TextField name='time' label={`Затраченное время (${formatTime(time)})`} />
         <TextField name='description' label='Описание' />
-        <TextField name='time' label='Затраченное время' placeholder={formatTime(time)} />
         <Button type='submit' text='Создать' classes='mr-2' />
         <DangerButton type='button' onClick={handleShow}>Отмена</DangerButton>
       </FormComponent>

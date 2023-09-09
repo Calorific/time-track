@@ -24,19 +24,16 @@ userRouter.get('/data', auth, async (req, res) => {
 })
 
 userRouter.patch('/', auth, [
-  check('types.*', serverErrors.maxLengthProjectType).isLength({ max: 30 }).optional(),
+  check('types.*', serverErrors.maxLengthProjectType).isLength({ max: 25 }).optional(),
+  check('types.*', serverErrors.typeRequired).isLength({ min: 1 }).optional(),
   check('types', serverErrors.incorrectTypes).isArray({ min: 1}).optional(),
   check('currentProject', serverErrors.invalidProjectId).isMongoId().optional(),
   check('theme', serverErrors.invalidTheme).custom(theme => ['dark', 'light'].includes(theme)).optional(),
   async (req, res) => {
     const result = validationResult(req)
 
-    if (!result.isEmpty()) {
-      if (result.errors.find(e => e.path === 'types'))
-        return res.status(400).json(parseErrors(result))
-
+    if (!result.isEmpty())
       return res.status(400).json(parseErrors(result.errors[0].msg, false))
-    }
 
     try {
       const { currentProject, theme, types } = req.body

@@ -26,7 +26,9 @@ projectsRouter.post('/add', auth, [
 
       const projectExists = user.projects.find(p => p.title === req.body.title)
       if (projectExists)
-        return res.status(409).json(parseErrors({ errors: { title: serverErrors.projectExists } }))
+        return res.status(409).json({
+          errors: { formErrors: { title: serverErrors.projectExists }}
+        })
 
       user.projects.push(req.body)
 
@@ -51,17 +53,21 @@ projectsRouter.post('/edit', auth, [
     try {
       const { projectId, ...project } = req.body
 
-      const user = await User.findOne({ _id: '64ef62b532a1e022ec550eed' })
+      const user = await User.findOne({ _id: req.userId })
       if (!user)
         return res.status(409).json(parseErrors(serverErrors.userNotFound, false))
 
       const projectIdx = user.projects.findIndex(p => p._id.toString() === projectId)
       if (projectIdx === -1)
-        return res.status(409).json(parseErrors({ errors: { title: serverErrors.projectNotFound } }))
+        return res.status(409).json({
+          errors: { formErrors: { title: serverErrors.projectNotFound }}
+        })
 
       const duplicateTitle = user.projects.some((p, i) => p.title === project.title && i !== projectIdx)
       if (duplicateTitle)
-        return res.status(409).json(parseErrors({ errors: { title: serverErrors.projectExists } }))
+        return res.status(409).json({
+          errors: { formErrors: { title: serverErrors.projectExists }}
+        })
 
       user.projects[projectIdx].title = project.title
       user.projects[projectIdx].description = project.description

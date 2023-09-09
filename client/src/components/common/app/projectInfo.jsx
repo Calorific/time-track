@@ -38,8 +38,8 @@ const ProjectInfo = ({ project, alwaysShow }) => {
 
   return (
     <div className="px-4 md:px-5 py-2 md:py-3">
-      <h3 className="text-lg font-bold text-gray-800 dark:text-gray-200 flex justify-center">
-        <NavLink to={`/projects/${project._id}/details`}>{project.title}</NavLink>
+      <h3 className="text-lg font-bold text-gray-800 dark:text-gray-200 flex justify-center flex-wrap">
+        <NavLink to={`/projects/${project._id}/details`} className='break-words max-w-full'>{project.title}</NavLink>
         <Badge text={project.type} />
       </h3>
       <p className='dark:text-gray-400 pt-1'>

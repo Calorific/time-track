@@ -15,7 +15,8 @@ const TextField = ({ type, name, value, onChange, label, placeholder, error, onK
     onChange({ name: target.name, value: target.value })
   }
 
-  const inputClasses = 'text-gray-700 dark:text-gray-200 !py-0'
+  const inputClasses = 'text-gray-700 dark:text-gray-200 !py-0 disabled:dark:text-gray-400 disabled:bg-inherit ' +
+      'disabled:!border-b-[1px] '
   const labelClasses = 'dark:border-gray-400 dark:peer-focus:text-gray-300 dark:after:border-gray-400 border-0 ' +
       'dark:text-blue-gray-400 after:border-b-[1px] dark:peer-focus:after:border-gray-300'
 

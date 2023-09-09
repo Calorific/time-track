@@ -4,12 +4,11 @@ import Badge from '../common/app/badge'
 import { formatTime } from '../../utils/formatTime'
 import { getProjectTime } from '../../utils/getProjectTime'
 import { useDispatch, useSelector } from 'react-redux'
-import { getRecords } from '../../store/records'
-import Button from '../common/app/button'
+import { getProjectRecords } from '../../store/records'
 import { NavLink } from 'react-router-dom'
 import toast from 'react-hot-toast'
 import ToastUndoDelete from '../common/app/toastUndoDelete'
-import { faCirclePlus, faPenToSquare, faXmark } from '@fortawesome/free-solid-svg-icons'
+import { faPenToSquare, faXmark } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { deleteProject } from '../../store/projects'
 import SuccessButton from '../common/app/successButton'
@@ -17,7 +16,7 @@ import DangerButton from '../common/app/dangerButton'
 
 const Project = ({ project }) => {
   const dispatch = useDispatch()
-  const records = useSelector(getRecords())
+  const records = useSelector(getProjectRecords(project._id))
   const [isDeleting, setIsDeleting] = useState(false)
 
   const onProjectDelete = () => {
@@ -36,7 +35,7 @@ const Project = ({ project }) => {
   }
 
   return (
-    <tr className={'bg-white border-b dark:bg-gray-800 dark:border-gray-700 align-baseline ' + (isDeleting ? 'opacity-50' : '') } key={project._id}>
+    <tr className={'bg-white border-b dark:bg-gray-800 dark:border-gray-700 align-baseline ' + (isDeleting ? 'opacity-50' : '') }>
       <th scope="row" className="px-6 py-4 font-medium text-stone-700 text-lg whitespace-nowrap dark:text-stone-200 w-[20%]">
         <NavLink to={`/projects/${project._id}/details`}>{project.title}</NavLink>
       </th>
@@ -47,7 +46,7 @@ const Project = ({ project }) => {
         {new Date(project.createdAt).toLocaleDateString()}
       </td>
       <td className="px-6 py-4 w-[20%]">
-        {formatTime(getProjectTime(records[project._id]))}
+        {formatTime(getProjectTime(records))}
       </td>
       <td className="px-6 py-2 w-[20%] whitespace-nowrap">
         <NavLink to={`/projects/${project._id}/edit`}>

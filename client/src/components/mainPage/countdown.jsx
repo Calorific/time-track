@@ -6,6 +6,7 @@ import FormComponent from '../common/form/form'
 import TextField from '../common/form/textField'
 import toast from 'react-hot-toast'
 import cookieService from '../../services/cookie.service'
+import { playNotification } from '../../utils/playNotification'
 
 const Countdown = ({ start, toggleStart, onTimeChange, time, reset }) => {
   const [initialTime, setInitialTime] = useState(+cookieService.getCountdownInitialTime() || 0)
@@ -15,9 +16,10 @@ const Countdown = ({ start, toggleStart, onTimeChange, time, reset }) => {
       const interval = setInterval(() => {
         onTimeChange()
 
-        if (time + 1 === initialTime) {
+        if (time + 1 >= initialTime) {
           clearInterval(interval)
           toggleStart()
+          playNotification()
         }
       }, 1000)
       return () => clearInterval(interval)
@@ -52,8 +54,8 @@ const Countdown = ({ start, toggleStart, onTimeChange, time, reset }) => {
 
   return (
     <div className='flex justify-between items-center w-full gap-x-2'>
-      <FormComponent classes='sm:flex sm:justify-between sm:flex-row sm:items-center sm:gap-x-2 sm:w-full' onSubmit={handleSubmit}>
-        <Button type="submit" text={!start ? 'Старт' : 'Пауза'} />
+      <FormComponent classes='sm:flex sm:justify-between sm:flex-row sm:items-center sm:gap-x-2 sm:w-full' onSubmit={handleSubmit} clear={true}>
+        <Button type="submit" text={!start ? 'Старт' : 'Пауза'} classes='w-[77px]' />
         <TextField name='hours' label='Часы' type='number' classes='sm:m-0 my-3 sm:flex-1 w-full' min={0} disabled={start} />
         <TextField name='minutes' label='Минуты' type='number' classes='sm:m-0 mb-3 sm:flex-1 w-full' min={0} max={59} disabled={start} />
         <TextField name='seconds' label='Секунды' type='number' classes='sm:m-0 mb-3 sm:flex-1 w-full' min={0} max={59} disabled={start} />

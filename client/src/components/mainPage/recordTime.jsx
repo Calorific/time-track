@@ -19,7 +19,7 @@ const   RecordTime = ({ onTimeChange, time }) => {
 
   const toggleStart = () => {
     setStart(prevState => {
-      cookieService.setIsCounting(!prevState)
+      cookieService.setIsCounting(!prevState ? 'true' : '')
       cookieService.setStartTime(!prevState ? Date.now() : '')
       return !prevState
     })
@@ -29,6 +29,9 @@ const   RecordTime = ({ onTimeChange, time }) => {
     onTimeChange(true)
     setStart(false)
     cookieService.setCountdownInitialTime('')
+    cookieService.setIsCountdown('')
+    cookieService.setStartTime('')
+    cookieService.setCurrentRecordTime('')
   }
 
   return (

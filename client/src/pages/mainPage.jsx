@@ -7,7 +7,7 @@ import RecordTime from '../components/mainPage/recordTime'
 import CreateRecord from '../components/mainPage/createRecord'
 import { getProject, getProjectsList } from '../store/projects'
 import cookieService from '../services/cookie.service'
-import { computeCurrentRecordTime } from '../utils/computeCurrentRecordTime'
+import { computeRecordTime } from '../utils/computeRecordTime'
 import Divider from '../components/common/app/divider'
 import CardWrapper from '../components/common/app/cardWrapper'
 
@@ -16,7 +16,7 @@ const MainPage = () => {
   const currentProjectId = useSelector(getCurrentProjectId())
   const projects = useSelector(getProjectsList())
   const currentProject = useSelector(getProject(currentProjectId))
-  const computeTime = useCallback(computeCurrentRecordTime, [])
+  const computeTime = useCallback(computeRecordTime, [])
 
   const [time, setTime] = useState(computeTime)
   const [selectValue, setSelectValue] = useState(currentProject?._id)
@@ -32,6 +32,14 @@ const MainPage = () => {
   const handleTimeChange = reset => {
     setTime(prevState => {
       const newTime = reset ? 0 : prevState + 1
+      const startTime = +cookieService.getStartTime()
+      if (startTime) {
+        const timePassed = Math.round((Date.now() - startTime) / 1000)
+        if (newTime < timePassed && !reset) {
+          cookieService.setCurrentRecordTime(timePassed)
+          return timePassed
+        }
+      }
       cookieService.setCurrentRecordTime(newTime)
       return newTime
     })
@@ -41,7 +49,7 @@ const MainPage = () => {
     return (
         <div className='h-full w-full flex justify-center items-start pb-5 mt-16'>
           <CardWrapper>
-            <h2 className="text-md sm:text-xl dark:text-gray-200 text-center">Вы еще не создали ни одного проекта</h2>
+            <h2 className="text-md sm:text-xl dark:text-gray-200 text-center p-2">Вы еще не создали ни одного проекта</h2>
           </CardWrapper>
         </div>
     )
@@ -50,7 +58,7 @@ const MainPage = () => {
     <div className='h-full w-full flex justify-center items-start pb-5 mt-16'>
       <CardWrapper externalClasses='min-w-[310px] max-w-[600px] sm:min-w-[540px] md:min-w-[600px] !p-0 mx-2'>
         <div className="flex justify-between bg-gray-100 border-b rounded-t-xl py-2 px-4 md:py-3 md:px-5 dark:bg-gray-800 dark:border-gray-700">
-          <p className="mt-2 text-sm text-gray-500 dark:text-gray-500 align-middle">
+          <p className="mt-2 mr-1 text-sm text-gray-500 dark:text-gray-500 align-middle">
             Текущий проект
           </p>
           <SelectField name='project' options={options} value={selectValue} onChange={handleChange} label='Текущий проект' />
