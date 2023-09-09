@@ -11,10 +11,19 @@ body {
   scrollbar-width: none;
 }
 
+p {
+  word-break: break-word;
+}
+
+.selectInput span {
+  display: block;
+  max-width: 90%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .ripple {
   display: none;
 }
 
-p {
-  word-break: break-word;
-}

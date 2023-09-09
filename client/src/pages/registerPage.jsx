@@ -26,17 +26,10 @@ const RegisterPage = () => {
 
   const validationScheme = yup.object().shape(registerValidations)
 
-  const defaultValues = {
-    name: 'Abc',
-    email: 'b@mail.ru',
-    password: 'Test1234',
-    agree: true
-  }
-
   return <>
     <CardWrapper externalClasses={'min-w-[310px] sm:min-w-[450px] p-4 ' + (authLoading ? 'hidden' : '')}>
       <h2 className="text-3xl dark:text-gray-200 mb-4">Регистрация</h2>
-      <FormComponent onSubmit={handleSubmit} validationScheme={validationScheme} defaultData={defaultValues} serverErrors={authErrors}>
+      <FormComponent onSubmit={handleSubmit} validationScheme={validationScheme} serverErrors={authErrors}>
         <TextField name="name" label="Имя" autoFocus />
         <TextField name="email" label="Email" />
         <TextField name="password" type="password" label="Пароль" />

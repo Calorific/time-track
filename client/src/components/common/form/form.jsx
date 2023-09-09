@@ -36,6 +36,7 @@ const FormComponent = ({ children, classes, validationScheme, onSubmit, defaultD
       return
 
     const errors = await onSubmit(data)
+
     if (!errors && clear)
       setData(defaultData)
   }
@@ -102,4 +103,4 @@ FormComponent.propTypes = {
   serverErrors: PropTypes.object,
   clear: PropTypes.bool,
 }
-export default FormComponent
+export default React.memo(FormComponent)

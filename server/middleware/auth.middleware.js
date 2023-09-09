@@ -8,7 +8,7 @@ export const auth = async (req, res, next) => {
   try {
     const accessToken = req.headers.authorization?.split(' ')?.[1]
 
-    const data = await tokenService.validateAccessToken(accessToken)
+    const data = accessToken && await tokenService.validateAccessToken(accessToken)
 
     if (!data)
       return res.status(401).json({

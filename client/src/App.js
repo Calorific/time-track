@@ -10,6 +10,8 @@ import authService from './services/auth.service'
 import { logOut } from './store/auth'
 import withToastErrors from './components/hoc/withToastErrors'
 import serverErrors from './serverErrors'
+import { useTheme } from './hooks/useTheme'
+import { Toaster } from 'react-hot-toast'
 
 const App = () => {
   const dispatch = useDispatch()
@@ -17,11 +19,10 @@ const App = () => {
   const location = useLocation()
   const currentUserData = useSelector(getCurrentUser())
   const keepLoggedIn = cookieService.getKeepLoggedIn()
-  const theme = cookieService.getTheme() || 'light'
+  const theme = useTheme()
 
   useEffect(() => {
     ;(async () => {
-      document.body.classList[theme === 'dark' ? 'add' : 'remove']('dark')
       if (keepLoggedIn && !currentUserData) {
         const data = await dispatch(loadCurrentUserData())
         const errors = data?.errors
@@ -29,17 +30,22 @@ const App = () => {
           dispatch(logOut(navigate))
       }
     })()
-  }, [keepLoggedIn, currentUserData, dispatch, navigate, theme])
+  }, [keepLoggedIn, currentUserData, dispatch, navigate])
 
   const elements = useRoutes(routes(!!keepLoggedIn || currentUserData, location))
 
-  window.addEventListener('beforeunload', () => {
-    if (!cookieService.getKeepLoggedIn() && cookieService.getAccessToken()) {
-      cookieService.deleteAllCookies()
-      authService.logOut().then()
+  useEffect(() => {
+    window.onbeforeunload = () => {
+      if (!cookieService.getKeepLoggedIn() && cookieService.getAccessToken()) {
+        cookieService.deleteAllCookies(['theme'])
+        authService.logOut().then()
+      }
+      return null
     }
-    return null
-  })
+
+    return () => window.onbeforeunload = null
+  }, [])
+
 
   if (keepLoggedIn && !currentUserData)
     return (
@@ -49,9 +55,17 @@ const App = () => {
     )
 
   return (
-    <div className="App">
-      {elements}
-    </div>
+    <>
+      <Toaster position="top-right" toastOptions={theme === 'dark' ? {
+        style: {
+          background: '#0f172a',
+          color: '#d1d5db',
+        }
+      } : {}} />
+      <div className="App">
+        {elements}
+      </div>
+    </>
   )
 }
 

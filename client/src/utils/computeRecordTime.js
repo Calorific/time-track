@@ -1,10 +1,11 @@
 import cookieService from '../services/cookie.service'
+import { playNotification } from './playNotification'
 
-export const computeCurrentRecordTime = () => {
+export const computeRecordTime = () => {
   const time = +cookieService.getCurrentRecordTime() || 0
   const startTime = +cookieService.getStartTime() || 0
   const initialTime = +cookieService.getCountdownInitialTime() || 0
-  const isCountdown = !!cookieService.getIsCountdown()
+  const isCountdown = cookieService.getIsCountdown() === 'true'
 
   if (!startTime)
     return time
@@ -14,6 +15,7 @@ export const computeCurrentRecordTime = () => {
   if (isCountdown && secondsPassed >= +cookieService.getCountdownInitialTime()) {
     cookieService.setCurrentRecordTime(initialTime)
     cookieService.setIsCounting(false)
+    playNotification()
     return initialTime
   }
 

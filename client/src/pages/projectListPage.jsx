@@ -5,23 +5,24 @@ import { useSelector } from 'react-redux'
 import { getProjectsList } from '../store/projects'
 import ProjectList from '../components/projectListPage/projectList'
 import ProjectSearch from '../components/projectListPage/projectSearch'
-import Button from '../components/common/app/button'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCirclePlus } from '@fortawesome/free-solid-svg-icons'
 import SuccessButton from '../components/common/app/successButton'
+import { orderBy } from '../utils/orderBy'
 
 
 
 const ProjectListPage = () => {
+  const itemsPerPage = 5
+
   const navigate = useNavigate()
   const { page: initialPage } = useParams()
   const projects = useSelector(getProjectsList())
-  const [itemOffset, setItemOffset] = useState(0)
+  const [itemOffset, setItemOffset] = useState((+((initialPage - 1) || 0) * itemsPerPage) % projects.length)
   const [search, setSearch] = useState('')
+
   const paginationBaseClasses = 'text-gray-500 hover:text-blue-700 hover:bg-gray-200 py-1 px-2 inline-flex' +
       ' items-center transition-colors font-medium dark:hover:bg-gray-700 '
-
-  const itemsPerPage = 1
 
   const handlePageClick = e => {
     const newOffset = (e.selected * itemsPerPage) % projects.length
@@ -35,7 +36,8 @@ const ProjectListPage = () => {
   }
 
   const endOffset = itemOffset + itemsPerPage
-  const filteredProjects = search ? projects.filter(p => p.title.toLowerCase().includes(search.toLowerCase())) : projects
+  const sortedProjects = orderBy(projects, 'createdAt', 'desc')
+  const filteredProjects = search ? sortedProjects.filter(p => p.title.toLowerCase().includes(search.toLowerCase())) : sortedProjects
 
   const currentItems = filteredProjects.slice(itemOffset, endOffset)
   const pageCount = Math.ceil(filteredProjects.length / itemsPerPage)

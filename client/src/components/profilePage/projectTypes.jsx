@@ -2,12 +2,11 @@ import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons'
-import { Chip } from '@material-tailwind/react'
 import FormComponent from '../common/form/form'
 import TextField from '../common/form/textField'
 import Button from '../common/app/button'
 import { useDispatch, useSelector } from 'react-redux'
-import { getUserErrors, getUserLoading, updateTypes } from '../../store/user'
+import { getUserLoading, updateTypes } from '../../store/user'
 import * as yup from 'yup'
 import typeValidations from '../../validations/type'
 import Loader from '../common/app/loader'
@@ -16,7 +15,6 @@ import Type from './type'
 const ProjectTypes = ({ types }) => {
   const dispatch = useDispatch()
   const loading = useSelector(getUserLoading())
-  const userErrors = useSelector(getUserErrors())
   const [show, setShow] = useState(false)
   const [serverErrors, setServerErrors] = useState({})
 
@@ -25,11 +23,7 @@ const ProjectTypes = ({ types }) => {
   }
 
   const handleSubmit = async payload => {
-    const data = await dispatch(updateTypes([...types, payload.type]))
-    if (data?.errors?.formErrors) {
-      setServerErrors(data.errors.formErrors)
-      return data
-    }
+    return await dispatch(updateTypes([...types, payload.type]))
   }
 
   const handleDelete = type => {
@@ -49,13 +43,11 @@ const ProjectTypes = ({ types }) => {
               className={'cursor-pointer mt-[3px] ' + (show ? 'text-red-500' : 'text-green-500 ')}
               onClick={handleShow} />
         </p>
-        {show ?
-          <FormComponent classes='flex gap-2 justify-between items-center' onSubmit={handleSubmit} clear={true}
-                               validationScheme={validationScheme} serverErrors={serverErrors}>
-            <TextField name='type' label='Тип проекта' />
-            <Button type='submit'><FontAwesomeIcon icon={faPlus} /></Button>
-          </FormComponent>
-        : ''}
+        <FormComponent classes={'flex gap-2 justify-between items-center ' + (!show ? 'hidden' : '')} onSubmit={handleSubmit} clear={true}
+                             validationScheme={validationScheme} serverErrors={serverErrors}>
+          <TextField name='type' label='Тип проекта' />
+          <Button type='submit'><FontAwesomeIcon icon={faPlus} /></Button>
+        </FormComponent>
         <div className="flex flex-wrap gap-2">
           {types.map((type, key) => <Type key={key} value={type} canDelete={types.length > 1} onDelete={handleDelete} /> )}
         </div>

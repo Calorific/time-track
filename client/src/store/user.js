@@ -90,11 +90,11 @@ export const changeTheme = theme => async dispatch => {
 
 export const updateTypes = types => async dispatch => {
   dispatch(userRequested())
+
   try {
     await httpService.patch('/user', { types })
     dispatch(typesUpdated(types))
   } catch (e) {
-    console.log(e?.response?.data)
     const data = e?.response?.data
     dispatch(userRequestFail(data?.errors || { message: e.code }))
     return data || { errors: { message: e.code } }
@@ -118,6 +118,8 @@ export const loadCurrentUserData = () => async dispatch => {
 export const getCurrentUser = () => state => state.user.currentUser
 
 export const getCurrentProjectId = () => state => state.user.currentUser?.currentProject
+
+export const getUserTheme = () => state => state.user.currentUser?.theme
 
 export const getProjectTypes = () => state => state.user.currentUser?.projectTypes
 

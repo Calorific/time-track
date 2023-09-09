@@ -1,7 +1,7 @@
 import * as yup from 'yup'
 
 const typeValidations = {
-  type: yup.string().required('Имя обязательно для заполнения')
+  type: yup.string().required('Обязательно нужно выбрать название')
     .max(25, 'Тип не должен превышать 25 символов')
 }
 

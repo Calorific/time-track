@@ -5,7 +5,6 @@ import { BrowserRouter } from 'react-router-dom'
 import './index.css'
 import { createStore } from './store/createStore'
 import { Provider } from 'react-redux'
-import { Toaster } from 'react-hot-toast'
 import { ThemeProvider } from '@material-tailwind/react'
 import '@fontsource/inter'
 import '@fontsource/lato/700.css'
@@ -20,7 +19,6 @@ root.render(
   <Provider store={store}>
     <BrowserRouter>
       <React.StrictMode>
-        <Toaster position="top-right" />
         <ThemeProvider>
           <App />
         </ThemeProvider>

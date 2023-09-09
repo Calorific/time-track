@@ -8,7 +8,6 @@ const startTime = 'startTime'
 const countdownInitialTime = 'countdownInitialTime'
 
 class CookieService {
-
   findCookie(name) {
     const parts = `; ${document.cookie}`.split(`; ${name}=`)
     return parts[1]?.split('; ')[0]
@@ -50,6 +49,10 @@ class CookieService {
     return this.findCookie(isCountdown)
   }
 
+  getIsCounting() {
+    return this.findCookie(isCounting)
+  }
+
   setIsCounting(value) {
     this.setCookie(isCounting, value)
   }
@@ -60,10 +63,6 @@ class CookieService {
 
   setStartTime(time) {
     this.setCookie(startTime, time)
-  }
-
-  getIsCounting() {
-    return this.findCookie(isCounting)
   }
 
   setCountdownInitialTime(time) {
@@ -81,6 +80,7 @@ class CookieService {
       const cookie = cookies[i]
       const eqPos = cookie.indexOf('=')
       const name = eqPos > -1 ? cookie.substring(0, eqPos) : cookie
+
       if (!except.includes(name))
         document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:00 GMT'
     }
