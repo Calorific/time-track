@@ -4,7 +4,7 @@ import TextField from '../components/common/form/textField'
 import Button from '../components/common/app/button'
 import * as yup from 'yup'
 import { NavLink, useNavigate } from 'react-router-dom'
-import loginValidations from '../validations/login'
+import loginValidations from '../validations/login.validation'
 import CheckboxField from '../components/common/form/checkboxField'
 import { useDispatch, useSelector } from 'react-redux'
 import { getAuthLoading, logIn } from '../store/auth'
@@ -31,9 +31,9 @@ const LoginPage = () => {
   const validationScheme = yup.object().shape(loginValidations)
 
   return <>
-    <CardWrapper externalClasses={'min-w-[310px] sm:min-w-[450px] p-4 ' + (authLoading ? 'hidden' : '')}>
+    <CardWrapper className={'min-w-[310px] sm:min-w-[450px] p-4 ' + (authLoading ? 'hidden' : '')}>
       <h2 className='text-3xl dark:text-gray-200'>Авторизация</h2>
-      <FormComponent classes='mt-4' onSubmit={handleSubmit} validationScheme={validationScheme}
+      <FormComponent className='mt-4' onSubmit={handleSubmit} validationScheme={validationScheme}
                      serverErrors={authErrors} defaultData={defaultData}
       >
         <TextField name='email' label='Email' autoFocus />

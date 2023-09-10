@@ -21,7 +21,7 @@ const ProjectListPage = () => {
   const [itemOffset, setItemOffset] = useState((+((initialPage - 1) || 0) * itemsPerPage) % projects.length)
   const [search, setSearch] = useState('')
 
-  const paginationBaseClasses = 'text-gray-500 hover:text-blue-700 hover:bg-gray-200 py-1 px-2 inline-flex' +
+  const paginationBaseClassName = 'text-gray-500 hover:text-blue-700 hover:bg-gray-200 py-1 px-2 inline-flex' +
       ' items-center transition-colors font-medium dark:hover:bg-gray-700 '
 
   const handlePageClick = e => {
@@ -58,7 +58,7 @@ const ProjectListPage = () => {
     <div className='flex justify-center pt-5'>
       <div className='w-full sm:w-11/12 px-5 sm:px-0 flex justify-center flex-col'>
         <div className='flex gap-2 flex-wrap items-center pb-3'>
-          <ProjectSearch value={search} onChange={handleSearch} classes='w-52 sm:w-[315px]' placeholder='Поиск по названию' />
+          <ProjectSearch value={search} onChange={handleSearch} className='w-52 sm:w-[315px]' placeholder='Поиск по названию' />
           <NavLink to='/projects/create'>
             <SuccessButton>
               <FontAwesomeIcon icon={faCirclePlus} /> <span className='hidden sm:inline-block'>Создать проект</span>
@@ -79,9 +79,9 @@ const ProjectListPage = () => {
               initialPage={+initialPage - 1 || 0}
               renderOnZeroPageCount={null}
               containerClassName="flex items-center justify-center space-x-2 mt-3"
-              pageLinkClassName={paginationBaseClasses + 'rounded-sm'}
-              previousLinkClassName={paginationBaseClasses + 'gap-2 rounded-md'}
-              nextLinkClassName={paginationBaseClasses + 'gap-2 rounded-md'}
+              pageLinkClassName={paginationBaseClassName + 'rounded-sm'}
+              previousLinkClassName={paginationBaseClassName + 'gap-2 rounded-md'}
+              nextLinkClassName={paginationBaseClassName + 'gap-2 rounded-md'}
               activeLinkClassName="!text-blue-600"
           />}
         </> : <p className="text-base text-gray-900 dark:text-white mt-8 ml-8">

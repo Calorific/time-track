@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const ProjectSearch = ({ value, onChange, classes, placeholder }) => {
+const ProjectSearch = ({ value, onChange, className, placeholder }) => {
 
   const handleChange = e => {
     onChange(e.target.value)
@@ -20,21 +20,21 @@ const ProjectSearch = ({ value, onChange, classes, placeholder }) => {
           <input type="text" id="table-search" placeholder={placeholder} onChange={handleChange} value={value}
                  className={`block p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg outline-none
                    bg-gray-50 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
-                   dark:text-gray-200 dark:focus:border-blue-500 max-w-full ` + classes} />
+                   dark:text-gray-200 dark:focus:border-blue-500 max-w-full ` + className} />
         </div>
       </div>
   )
 }
 
 ProjectSearch.defaultPtops = {
-  classes: '',
+  className: '',
   placeholder: 'Поиск'
 }
 
 ProjectSearch.propTypes = {
   value: PropTypes.string,
   onChange: PropTypes.func,
-  classes: PropTypes.string,
+  className: PropTypes.string,
   placeholder: PropTypes.string,
 }
 

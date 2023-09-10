@@ -56,7 +56,7 @@ const MainPage = () => {
 
   return (
     <div className='h-full w-full flex justify-center items-start pb-5 mt-16'>
-      <CardWrapper externalClasses='min-w-[310px] max-w-[600px] sm:min-w-[540px] md:min-w-[600px] !p-0 mx-2'>
+      <CardWrapper className='min-w-[310px] max-w-[600px] sm:min-w-[540px] md:min-w-[600px] !p-0 mx-2'>
         <div className="flex justify-between bg-gray-100 border-b rounded-t-xl py-2 px-4 md:py-3 md:px-5 dark:bg-gray-800 dark:border-gray-700">
           <p className="mt-2 mr-1 text-sm text-gray-500 dark:text-gray-500 align-middle">
             Текущий проект

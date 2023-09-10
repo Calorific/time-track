@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
-import { Chart, registerables  } from 'chart.js'
 import SwitchField from '../common/form/switchField'
 import { useTheme } from '../../hooks/useTheme'
 import { getChartOptions } from '../../utils/getChartOptions'
+import { Chart, registerables  } from 'chart.js'
 Chart.register(...registerables)
 
 const RecordChart = ({ data, types, projects, records }) => {
   const [isProjects, setIsProjects] = useState(false)
   const [, setChart] = useState(null)
+  const [isZero, setIsZero] = useState(false)
   const theme = useTheme()
 
   const handleChange = () => {
@@ -17,6 +18,8 @@ const RecordChart = ({ data, types, projects, records }) => {
 
   useEffect(() => {
     const options = getChartOptions(data, types, isProjects, theme, projects)
+    setIsZero(!options.data.datasets[0].data.some(x => x > 0))
+
     const newChart = new Chart('recordCanvas', options)
     setChart(newChart)
     newChart.update('none')
@@ -28,7 +31,10 @@ const RecordChart = ({ data, types, projects, records }) => {
       <div className='w-72 sm:w-96'>
         <SwitchField name='chartType' leftLabel='По типам' rightLabel='По проектам' value={isProjects} onChange={handleChange} />
         <div>
-          <canvas id='recordCanvas'></canvas>
+          {isZero ? <p className="text-base text-gray-900 dark:text-white mt-8 ml-8">
+            По заданным фильтрам отсутствуют данные
+          </p> : ''}
+          <canvas id="recordCanvas"></canvas>
         </div>
       </div>
     </div>

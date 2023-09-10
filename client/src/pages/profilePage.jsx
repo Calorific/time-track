@@ -20,7 +20,7 @@ const ProfilePage = () => {
 
   return (
     <div className='h-full w-full flex justify-center items-start pb-5 mt-16'>
-      <CardWrapper externalClasses={'min-w-[310px] sm:min-w-[450px] p-4' + (authLoading ? 'hidden' : '')}>
+      <CardWrapper className={'min-w-[310px] sm:min-w-[450px] p-4 max-w-[450px]' + (authLoading ? 'hidden' : '')}>
         <h2 className="text-3xl dark:text-gray-200 mb-4">Профиль</h2>
         <SwitchField leftLabel='Светлая тема' rightLabel='Темная тема' name='theme' value={isDark}
                      onChange={handleChange} />

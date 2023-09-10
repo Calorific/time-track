@@ -12,7 +12,7 @@ const RecordTableItem = ({ record }) => {
           <NavLink to={`/projects/${record.projectId}/details`}>{record.projectTitle}</NavLink>
         </th>
         <td className="px-6 py-4 w-[25%]">
-          <Badge text={record.type} externalClasses='!mx-0' />
+          <Badge text={record.type} className='!mx-0' />
         </td>
         <td className="px-6 py-4 w-[25%]">
           {formatTime(record.timeSpent)}

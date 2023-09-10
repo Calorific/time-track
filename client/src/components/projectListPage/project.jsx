@@ -40,7 +40,7 @@ const Project = ({ project }) => {
         <NavLink to={`/projects/${project._id}/details`}>{project.title}</NavLink>
       </th>
       <td className="px-6 py-4 w-[20%]">
-        <Badge text={project.type} externalClasses='!mx-0' />
+        <Badge text={project.type} className='!mx-0' />
       </td>
       <td className="px-6 py-4 w-[20%]">
         {new Date(project.createdAt).toLocaleDateString()}

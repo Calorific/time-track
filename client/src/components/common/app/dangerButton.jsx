@@ -4,7 +4,7 @@ import Button from './button'
 
 const DangerButton = ({ children, onClick, className }) => {
   return (
-    <Button type='button' onClick={onClick} bgColor='bg-red-500 hover:bg-red-700 dark:bg-red-600 dark:hover:bg-red-700' classes={className}>
+    <Button type='button' onClick={onClick} bgColor='bg-red-500 hover:bg-red-700 dark:bg-red-600 dark:hover:bg-red-700' className={className}>
       {children}
     </Button>
   )

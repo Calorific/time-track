@@ -9,7 +9,7 @@ import SelectField from '../components/common/form/selectField'
 import { useDispatch, useSelector } from 'react-redux'
 import { getProjectTypes } from '../store/user'
 import * as yup from 'yup'
-import projectValidations from '../validations/project'
+import projectValidations from '../validations/project.validation'
 import { addProject, editProject, getProject, getProjectsLoading } from '../store/projects'
 import Loader from '../components/common/app/loader'
 import GoBackButton from '../components/common/app/goBackButton'
@@ -45,13 +45,13 @@ const ProjectForm = () => {
 
   return (
     <div className='h-full w-full flex justify-center items-start pb-5 mt-8'>
-      <CardWrapper externalClasses={'min-w-[310px] sm:min-w-[450px] p-4 ' + (loading ? 'hidden' : '')}>
+      <CardWrapper className={'min-w-[310px] sm:min-w-[450px] p-4 ' + (loading ? 'hidden' : '')}>
         <h2 className="text-xl sm:text-3xl dark:text-gray-200">{isEditing ? 'Редактировать' : 'Создать'} проект</h2>
-        <FormComponent classes="mt-4" defaultData={defaultData} validationScheme={validationScheme}
+        <FormComponent className="mt-4" defaultData={defaultData} validationScheme={validationScheme}
                        onSubmit={handleSubmit} serverErrors={projectErrors}>
           <TextField name="title" label="Название" autoFocus />
           <TextAreaField name="description" label="Описание" />
-          <SelectField name='type' options={options} classes='mb-4' label='Выберите тип проекта' />
+          <SelectField name='type' options={options} className='mb-4' label='Выберите тип проекта' />
           <Button type="submit" text={isEditing ? 'Сохранить' : 'Создать'} />
           <GoBackButton type='button' />
         </FormComponent>

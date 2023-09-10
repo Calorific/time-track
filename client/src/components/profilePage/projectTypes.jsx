@@ -8,7 +8,7 @@ import Button from '../common/app/button'
 import { useDispatch, useSelector } from 'react-redux'
 import { getUserLoading, updateTypes } from '../../store/user'
 import * as yup from 'yup'
-import typeValidations from '../../validations/type'
+import typeValidations from '../../validations/type.validation'
 import Loader from '../common/app/loader'
 import Type from './type'
 
@@ -23,7 +23,10 @@ const ProjectTypes = ({ types }) => {
   }
 
   const handleSubmit = async payload => {
-    return await dispatch(updateTypes([...types, payload.type]))
+    const data = await dispatch(updateTypes([...types, payload.type]))
+    if (data?.errors?.formErrors)
+      setServerErrors(data.errors.formErrors)
+    return data
   }
 
   const handleDelete = type => {
@@ -43,7 +46,7 @@ const ProjectTypes = ({ types }) => {
               className={'cursor-pointer mt-[3px] ' + (show ? 'text-red-500' : 'text-green-500 ')}
               onClick={handleShow} />
         </p>
-        <FormComponent classes={'flex gap-2 justify-between items-center ' + (!show ? 'hidden' : '')} onSubmit={handleSubmit} clear={true}
+        <FormComponent className={'flex gap-2 justify-between items-center ' + (!show ? 'hidden' : '')} onSubmit={handleSubmit} clear={true}
                              validationScheme={validationScheme} serverErrors={serverErrors}>
           <TextField name='type' label='Тип проекта' />
           <Button type='submit'><FontAwesomeIcon icon={faPlus} /></Button>

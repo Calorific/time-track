@@ -4,7 +4,7 @@ import TextField from '../components/common/form/textField'
 import Button from '../components/common/app/button'
 import * as yup from 'yup'
 import { NavLink, useNavigate } from 'react-router-dom'
-import registerValidations from '../validations/register'
+import registerValidations from '../validations/register.validation'
 import CheckboxField from '../components/common/form/checkboxField'
 import { getAuthLoading, signUp } from '../store/auth'
 import { useDispatch, useSelector } from 'react-redux'
@@ -27,7 +27,7 @@ const RegisterPage = () => {
   const validationScheme = yup.object().shape(registerValidations)
 
   return <>
-    <CardWrapper externalClasses={'min-w-[310px] sm:min-w-[450px] p-4 ' + (authLoading ? 'hidden' : '')}>
+    <CardWrapper className={'min-w-[310px] sm:min-w-[450px] p-4 ' + (authLoading ? 'hidden' : '')}>
       <h2 className="text-3xl dark:text-gray-200 mb-4">Регистрация</h2>
       <FormComponent onSubmit={handleSubmit} validationScheme={validationScheme} serverErrors={authErrors}>
         <TextField name="name" label="Имя" autoFocus />

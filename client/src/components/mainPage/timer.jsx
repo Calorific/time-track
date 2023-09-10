@@ -14,7 +14,7 @@ const Timer = ({ start, toggleStart, onTimeChange, time, reset }) => {
 
   return (
       <div className='flex justify-between items-center pt-[2px] pb-[2px]'>
-        <Button type="submit" text={!start ? 'Старт' : 'Пауза'} onClick={toggleStart} classes='w-[77px]' />
+        <Button type="submit" text={!start ? 'Старт' : 'Пауза'} onClick={toggleStart} className='w-[77px]' />
         <span className="border border-gray-700 text-3xl align-middle rounded select-none cursor-pointer dark:text-gray-300 font-time"
               onClick={reset}
         >

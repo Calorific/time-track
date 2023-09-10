@@ -27,7 +27,7 @@ const RecordTable = ({ records, types }) => {
     <div className="relative overflow-x-auto w-11/12 mt-5 pt-2 mx-auto">
       <div className='flex gap-6 items-center flex-wrap mb-2'>
         <SelectField name='typeSelect' value={filterType} options={options} onChange={value => setFilterType(value)}
-                     label='Тип' classes='max-w-[230px]' />
+                     label='Тип' className='max-w-[230px]' />
         <p className="text-base text-gray-900 dark:text-gray-200">
           Общее время: {formatTime(getProjectTime(filteredRecords))}
         </p>
