@@ -1,34 +1,51 @@
 const serverErrors = {
+  // auth data
+  invalidName: 'INVALID_NAME',
+  nameRequired: 'NAME_REQUIRED',
+  maxLengthName: 'NAME_MAX_LENGTH_25',
+
   emailRequired: 'EMAIL_REQUIRED',
   invalidEmail: 'INVALID_EMAIL',
   maxLengthEmail: 'EMAIL_MAX_LENGTH_50',
+
   minLengthPassword: 'PASSWORD_MIN_LENGTH_8',
   maxLengthPassword: 'PASSWORD_MAX_LENGTH_25',
-  nameRequired: 'NAME_REQUIRED',
-  invalidName: 'INVALID_NAME',
-  maxLengthName: 'NAME_MAX_LENGTH_25',
-  userExists: 'USER_EXISTS',
-  internalError: 'INTERNAL_ERROR',
+
   agreementRequired: 'AGREEMENT_REQUIRED',
-  unauthorized: 'UNAUTHORIZED',
+
+  // register
+  userExists: 'USER_EXISTS',
+
+  // login
   userNotFound: 'USER_NOT_FOUND',
   wrongPassword: 'WRONG_PASSWORD',
+
+  // project & record
+  invalidProjectId: 'INVALID_PROJECT_ID',
+  descriptionRequired: 'DESCRIPTION_REQUIRED',
   maxLengthDescription: 'DESCRIPTION_MAX_LENGTH_250',
-  invalidTime: 'INVALID_TIME',
-  timeRequired: 'TIME_REQUIRED',
-  projectNotFound: 'PROJECT_NOT_FOUND',
-  networkError: 'ERR_NETWORK',
+
+  // project
+  projectExists: 'PROJECT_EXISTS',
   projectTitleRequired: 'PROJECT_TITLE_REQUIRED',
   maxLengthProjectTitle: 'PROJECT_TITLE_MAX_LENGTH_50',
   typeRequired: 'TYPE_REQUIRED',
   maxLengthProjectType: 'PROJECT_TYPE_MAX_LENGTH_25',
-  projectExists: 'PROJECT_EXISTS',
-  recordNotFound: 'RECORD_NOT_FOUND',
-  descriptionRequired: 'DESCRIPTION_REQUIRED',
-  invalidProjectId: 'INVALID_PROJECT_ID',
-  invalidTheme: 'INVALID_THEME',
+
+  // record
+  projectNotFound: 'PROJECT_NOT_FOUND',
+  timeRequired: 'TIME_REQUIRED',
+  invalidTime: 'INVALID_TIME',
+
+  // user data
+  incorrectTypes: 'INCORRECT_TYPES',
   typeExists: 'TYPE_EXISTS',
-  incorrectTypes: 'INCORRECT_TYPES'
+  invalidTheme: 'INVALID_THEME',
+
+  // general
+  networkError: 'ERR_NETWORK',
+  unauthorized: 'UNAUTHORIZED',
+  internalError: 'INTERNAL_ERROR',
 }
 
 export default serverErrors

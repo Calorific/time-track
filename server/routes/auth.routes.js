@@ -1,7 +1,7 @@
 import express from 'express'
 import bcrypt from 'bcryptjs'
 import { validationResult } from 'express-validator'
-import { logInValidations, signUpValidations } from '../validations/auth.validations.js'
+import { logInValidations, signUpValidations } from '../validations/auth.validation.js'
 import { parseErrors } from '../utils/parseErrors.js'
 import User from '../models/User.js'
 import tokenService from '../services/token.service.js'

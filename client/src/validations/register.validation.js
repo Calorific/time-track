@@ -1,5 +1,5 @@
 import * as yup from 'yup'
-import loginValidations from './login'
+import loginValidations from './login.validation'
 
 const registerValidations = {
   agree: yup.bool().required('Необходимо согласие').oneOf([true], 'Необходимо согласие'),
