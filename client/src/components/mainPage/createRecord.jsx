@@ -31,8 +31,10 @@ const CreateRecord = ({ time, currentProjectId }) => {
 
     const data = await dispatch(addRecord(payload))
 
-    if (data?.errors?.formErrors)
+    if (data?.errors?.formErrors) {
+      handleShow()
       setRecordErrors(data.errors.formErrors)
+    }
   }
 
   const handleShow = () => {
@@ -46,10 +48,10 @@ const CreateRecord = ({ time, currentProjectId }) => {
     </div> : <div className='flex justify-center my-4'><Loader /></div>}
     <Dialog open={show} handler={handleShow} className={'dark:bg-gray-800 p-4 ' + (loading ? 'hidden' : '')} aria-modal size='xs'>
       <h2 className="text-3xl dark:text-gray-200 mb-2">Новая запись</h2>
-      <FormComponent classes='px-2' {...{validationScheme, onSubmit, serverErrors: recordErrors }} clear={true}>
+      <FormComponent className='px-2' {...{validationScheme, onSubmit, serverErrors: recordErrors }} clear={true}>
         <TextField name='time' label={`Затраченное время (${formatTime(time)})`} />
         <TextField name='description' label='Описание' />
-        <Button type='submit' text='Создать' classes='mr-2' />
+        <Button type='submit' text='Создать' className='mr-2' />
         <DangerButton type='button' onClick={handleShow}>Отмена</DangerButton>
       </FormComponent>
     </Dialog>

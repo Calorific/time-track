@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 import { parseServerErrors } from '../../../utils/parseServerErrors'
 
-const FormComponent = ({ children, classes, validationScheme, onSubmit, defaultData, serverErrors, clear }) => {
+const FormComponent = ({ children, className, validationScheme, onSubmit, defaultData, serverErrors, clear }) => {
   const form = useRef()
   const [data, setData] = useState(defaultData)
   const [errors, setErrors] = useState({})
@@ -83,7 +83,7 @@ const FormComponent = ({ children, classes, validationScheme, onSubmit, defaultD
   })
 
   return (
-    <form onSubmit={handleSubmit} className={classes} ref={form}>
+    <form onSubmit={handleSubmit} className={className} ref={form}>
       {clonedElements}
     </form>
   )
@@ -91,7 +91,8 @@ const FormComponent = ({ children, classes, validationScheme, onSubmit, defaultD
 
 FormComponent.defaultProps = {
   defaultData: {},
-  serverErrors: {}
+  serverErrors: {},
+  className: ''
 }
 
 FormComponent.propTypes = {
@@ -99,7 +100,7 @@ FormComponent.propTypes = {
   validationScheme: PropTypes.object,
   onSubmit: PropTypes.func,
   defaultData: PropTypes.object,
-  classes: PropTypes.string,
+  className: PropTypes.string,
   serverErrors: PropTypes.object,
   clear: PropTypes.bool,
 }

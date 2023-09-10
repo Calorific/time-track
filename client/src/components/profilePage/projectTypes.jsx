@@ -46,7 +46,7 @@ const ProjectTypes = ({ types }) => {
               className={'cursor-pointer mt-[3px] ' + (show ? 'text-red-500' : 'text-green-500 ')}
               onClick={handleShow} />
         </p>
-        <FormComponent classes={'flex gap-2 justify-between items-center ' + (!show ? 'hidden' : '')} onSubmit={handleSubmit} clear={true}
+        <FormComponent className={'flex gap-2 justify-between items-center ' + (!show ? 'hidden' : '')} onSubmit={handleSubmit} clear={true}
                              validationScheme={validationScheme} serverErrors={serverErrors}>
           <TextField name='type' label='Тип проекта' />
           <Button type='submit'><FontAwesomeIcon icon={faPlus} /></Button>

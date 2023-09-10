@@ -1,13 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const Button = ({ onClick, type, disabled, bgColor, text, classes, children }) => {
-  const getButtonClasses = `${bgColor} text-white font-bold py-2 px-4 transition-colors dark:text-gray-200 rounded ${classes}`
+const Button = ({ onClick, type, disabled, bgColor, text, className, children }) => {
+  const getButtonClassName = `${bgColor} text-white font-bold py-2 px-4 transition-colors dark:text-gray-200 rounded ${className}`
 
   return (
     <>
       <button
-        className={getButtonClasses}
+        className={getButtonClassName}
         type={type}
         disabled={disabled}
         onClick={onClick}
@@ -21,15 +21,16 @@ const Button = ({ onClick, type, disabled, bgColor, text, classes, children }) =
 
 Button.defaultProps = {
   bgColor: 'bg-blue-500 hover:bg-blue-700 dark:bg-blue-800 dark:hover:bg-blue-900',
-  classes: ''
+  className: ''
 }
 
 Button.propTypes = {
   onClick: PropTypes.func,
   type: PropTypes.string,
+  disabled: PropTypes.bool,
   bgColor: PropTypes.string,
   text: PropTypes.string,
-  classes: PropTypes.string,
+  className: PropTypes.string,
   children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node])
 }
 

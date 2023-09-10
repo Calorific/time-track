@@ -1,10 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const CardWrapper = ({ children, externalClasses }) => {
+const CardWrapper = ({ children, className }) => {
   return (
     <div className={`bg-gray-50 border border-gray-200 rounded-lg shadow dark:bg-gray-800
-      dark:border-gray-700 mx-2 ${externalClasses || ''}`}>
+      dark:border-gray-700 mx-2 ${className || ''}`}>
       {children}
     </div>
   )
@@ -12,7 +12,7 @@ const CardWrapper = ({ children, externalClasses }) => {
 
 CardWrapper.propTypes = {
   children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
-  externalClasses: PropTypes.string,
+  className: PropTypes.string,
 }
 
 export default CardWrapper

@@ -32,7 +32,7 @@ const Record = ({ record, projectId }) => {
   if (record.isDeleting)
     return ''
 
-  return <CardWrapper externalClasses='relative w-[250px] !mx-0'>
+  return <CardWrapper className='relative w-[250px] !mx-0'>
     <div className='h-full'>
       <div className="bg-gray-100 border-b rounded-t-xl py-1 px-2 dark:bg-gray-800 dark:border-gray-700">
         <p className="text-xs text-gray-500 dark:text-gray-500 align-middle">

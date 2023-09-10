@@ -4,7 +4,7 @@ import { Input } from '@material-tailwind/react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
 
-const TextField = ({ type, name, value, onChange, label, placeholder, error, onKeyDown, classes, ...rest  }) => {
+const TextField = ({ type, name, value, onChange, label, placeholder, error, onKeyDown, className, ...rest  }) => {
   const [show, setShow] = useState(false)
 
   const togglePassword = () => {
@@ -15,9 +15,9 @@ const TextField = ({ type, name, value, onChange, label, placeholder, error, onK
     onChange({ name: target.name, value: target.value })
   }
 
-  const inputClasses = 'text-gray-700 dark:text-gray-200 !py-0 disabled:dark:text-gray-400 disabled:bg-inherit ' +
+  const inputClassName = 'text-gray-700 dark:text-gray-200 !py-0 disabled:dark:text-gray-400 disabled:bg-inherit ' +
       'disabled:!border-b-[1px] '
-  const labelClasses = 'dark:border-gray-400 dark:peer-focus:text-gray-300 dark:after:border-gray-400 border-0 ' +
+  const labelClassName = 'dark:border-gray-400 dark:peer-focus:text-gray-300 dark:after:border-gray-400 border-0 ' +
       'dark:text-blue-gray-400 after:border-b-[1px] dark:peer-focus:after:border-gray-300'
 
   const icon = type === 'password'
@@ -25,9 +25,9 @@ const TextField = ({ type, name, value, onChange, label, placeholder, error, onK
       : null
 
   return (
-    <div className={classes}>
+    <div className={className}>
       <Input label={label || ''} id={name} type={show ? 'text' : type} name={name} value={value} onChange={handleChange}
-             onKeyDown={onKeyDown} error={!!error} className={inputClasses} labelProps={{ className: labelClasses }} icon={icon}
+             onKeyDown={onKeyDown} error={!!error} className={inputClassName} labelProps={{ className: labelClassName }} icon={icon}
              containerProps={{ className: '!min-w-0' }} variant='standard' autoComplete="one-time-code" {...rest} />
       {error && <span className="text-sm text-red-600">{error}</span>}
     </div>
@@ -36,7 +36,7 @@ const TextField = ({ type, name, value, onChange, label, placeholder, error, onK
 
 TextField.defaultProps = {
   type: 'text',
-  classes: 'mb-4'
+  className: 'mb-4'
 }
 
 TextField.propTypes = {
@@ -48,7 +48,7 @@ TextField.propTypes = {
   onChange: PropTypes.func.isRequired,
   error: PropTypes.string,
   onKeyDown: PropTypes.func,
-  classes: PropTypes.string,
+  className: PropTypes.string,
 }
 
 export default React.memo(TextField)

@@ -7,7 +7,7 @@ import Dropdown from './dropdown'
 const Navbar = () => {
   const currentUser = useSelector(getCurrentUser())
 
-  const getLinkCLasses = ({ isActive }) => 'font-medium sm:py-6 font-roboto ' + (isActive
+  const getLinkClassName = ({ isActive }) => 'font-medium sm:py-6 font-roboto ' + (isActive
         ? 'font-medium text-blue-600 sm:py-6 dark:text-blue-500'
         : 'text-gray-500 hover:text-gray-400 dark:text-gray-400 dark:hover:text-gray-500')
 
@@ -41,16 +41,16 @@ const Navbar = () => {
         </div>
         <div id="navbar-collapse-with-animation" className="hs-collapse pl-4 pb-4 sm:p-0 border-[1px] border-gray-600 sm:border-0 absolute z-1000 bg-gray-50 dark:bg-gray-800 sm:relative left-0 right-0 hidden overflow-hidden basis-full grow sm:block">
           <div className="flex flex-col gap-y-4 gap-x-0 mt-5 sm:flex-row sm:items-center sm:justify-end sm:gap-y-0 sm:gap-x-7 sm:mt-0 sm:pl-7">
-            <NavLink className={getLinkCLasses} to="/" aria-current="page" end>
+            <NavLink className={getLinkClassName} to="/" aria-current="page" end>
               Главная
             </NavLink>
-            <NavLink className={getLinkCLasses} to="/projects" aria-current="page">
+            <NavLink className={getLinkClassName} to="/projects" aria-current="page">
               Проекты
             </NavLink>
-            <NavLink className={getLinkCLasses} to="/statistics" aria-current="page" end>
+            <NavLink className={getLinkClassName} to="/statistics" aria-current="page" end>
               Статистика
             </NavLink>
-            <Dropdown title={currentUser.name} classes='hidden sm:block' />
+            <Dropdown title={currentUser.name} className='hidden sm:block' />
           </div>
         </div>
       </nav>
