@@ -6,6 +6,9 @@ import cors from 'cors'
 import path from 'path'
 import router from './routes/index.js'
 import cookieParser from 'cookie-parser'
+import { fileURLToPath } from 'url'
+
+const dirname = path.dirname(fileURLToPath(import.meta.url))
 
 const app = express()
 
@@ -17,17 +20,17 @@ app.use(cors({ credentials: true, origin: 'http://localhost:3000' }))
 
 app.use('/api/v1', router)
 
-const PORT = config.get('port') ?? 8080
-
 if (process.env.NODE_ENV === 'production') {
-  app.use('/', express.static(path.resolve(__dirname, 'client')))
+  app.use('/', express.static(path.resolve(dirname, 'client')))
 
-  const indexPath = path.resolve(__dirname, 'client', 'index.html')
+  const indexPath = path.resolve(dirname, 'client', 'index.html')
 
   app.get('*', (req, res) => {
     res.sendFile(indexPath)
   })
 }
+
+const PORT = config.get('port') ?? 8080
 
 async function start() {
   try {
