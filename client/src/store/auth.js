@@ -41,6 +41,7 @@ const { authRequested, authRequestSuccess, authRequestFail } = actions
 
 export const signUp = ({ payload, navigate }) => async dispatch => {
   dispatch(authRequested())
+
   try {
     const { data } = await authService.register(payload)
     dispatch(authRequestSuccess(true))
@@ -53,13 +54,14 @@ export const signUp = ({ payload, navigate }) => async dispatch => {
   }
 }
 
-export const logIn = ({ payload, navigate }) => async dispatch => {
+export const logIn = ({ payload, navigate, referer }) => async dispatch => {
   dispatch(authRequested())
+
   try {
     const { data } = await authService.logIn(payload)
     dispatch(authRequestSuccess(true))
     dispatch(addUserData(data))
-    navigate('/')
+    setTimeout(() => navigate(referer?.pathname || '/'))
   } catch (e) {
     const data = e?.response?.data
     dispatch(authRequestFail(data?.errors || { message: e.code }))

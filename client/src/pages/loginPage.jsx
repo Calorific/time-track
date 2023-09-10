@@ -3,7 +3,7 @@ import FormComponent from '../components/common/form/form'
 import TextField from '../components/common/form/textField'
 import Button from '../components/common/app/button'
 import * as yup from 'yup'
-import { NavLink, useNavigate } from 'react-router-dom'
+import { NavLink, useLocation, useNavigate } from 'react-router-dom'
 import loginValidations from '../validations/login.validation'
 import CheckboxField from '../components/common/form/checkboxField'
 import { useDispatch, useSelector } from 'react-redux'
@@ -14,11 +14,13 @@ import CardWrapper from '../components/common/app/cardWrapper'
 const LoginPage = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const { state } = useLocation()
   const authLoading = useSelector(getAuthLoading())
   const [authErrors, setAuthErrors] = useState({})
 
   const handleSubmit = async payload => {
-    const data = await dispatch(logIn({ payload, navigate }))
+    const referer = state.referer
+    const data = await dispatch(logIn({ payload, navigate, referer }))
 
     if (data?.errors?.formErrors)
       setAuthErrors(data.errors.formErrors)

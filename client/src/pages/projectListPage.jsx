@@ -47,8 +47,8 @@ const ProjectListPage = () => {
       У вас еще нет проектов. <NavLink to='/projects/create' className='text-blue-500'>Создать</NavLink>
     </p>
 
-  if (+initialPage < 0)
-    return <Navigate to='/projects/' />
+  if (!+initialPage || +initialPage < 0)
+    return <Navigate to='/projects/1' />
 
   if (Math.ceil(projects.length / itemsPerPage) < +initialPage)
     return <Navigate to={'/projects/' + pageCount} />

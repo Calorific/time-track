@@ -17,10 +17,6 @@ const routes = (isLoggedIn, location) => [
     element: (isLoggedIn ? <MainLayout /> : <Navigate to='auth/login' state={{ referer: location }} />),
     children: [
       {
-        path: '/',
-        element: <MainPage />
-      },
-      {
         path: 'profile',
         element: <ProfilePage />
       },
@@ -43,7 +39,11 @@ const routes = (isLoggedIn, location) => [
       {
         path: 'projects/:page?',
         element: <ProjectListPage />
-      }
+      },
+      {
+        path: '',
+        element: <MainPage />
+      },
     ]
   },
   {
@@ -70,7 +70,7 @@ const routes = (isLoggedIn, location) => [
   },
   {
     path: '*',
-    element: <Navigate to={isLoggedIn ? '/' : 'auth/login'} state={{ referer: location }} />
+    element: <Navigate to={isLoggedIn ? '/' : 'auth/login'} />
   }
 ]
 
