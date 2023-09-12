@@ -12,6 +12,7 @@ import withToastErrors from './components/hoc/withToastErrors'
 import serverErrors from './serverErrors'
 import { useTheme } from './hooks/useTheme'
 import { Toaster } from 'react-hot-toast'
+import withCookieConsent from './components/hoc/withCookieConsent'
 
 const App = () => {
   const dispatch = useDispatch()
@@ -20,6 +21,8 @@ const App = () => {
   const currentUserData = useSelector(getCurrentUser())
   const keepLoggedIn = cookieService.getKeepLoggedIn()
   const theme = useTheme()
+
+  const elements = useRoutes(routes(!!keepLoggedIn || currentUserData, location))
 
   useEffect(() => {
     ;(async () => {
@@ -32,12 +35,15 @@ const App = () => {
     })()
   }, [keepLoggedIn, currentUserData, dispatch, navigate])
 
-  const elements = useRoutes(routes(!!keepLoggedIn || currentUserData, location))
+  useEffect(() => {
+    if (!cookieService.getKeepLoggedIn())
+      dispatch(logOut(navigate))
+  }, [dispatch, navigate])
 
   useEffect(() => {
     window.onbeforeunload = () => {
+      cookieService.deleteAllCookies(['theme'])
       if (!cookieService.getKeepLoggedIn() && cookieService.getAccessToken()) {
-        cookieService.deleteAllCookies(['theme'])
         authService.logOut().then()
       }
       return null
@@ -69,4 +75,4 @@ const App = () => {
   )
 }
 
-export default withToastErrors(App)
+export default withCookieConsent(withToastErrors(App))

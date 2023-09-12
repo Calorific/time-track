@@ -70,6 +70,8 @@ export const logIn = ({ payload, navigate, referer }) => async dispatch => {
 }
 
 export const logOut = navigate => async dispatch => {
+  dispatch(authRequested())
+
   try {
     await authService.logOut()
     dispatch(authRequestSuccess(false))

@@ -19,7 +19,7 @@ const LoginPage = () => {
   const [authErrors, setAuthErrors] = useState({})
 
   const handleSubmit = async payload => {
-    const referer = state.referer
+    const referer = state?.referer
     const data = await dispatch(logIn({ payload, navigate, referer }))
 
     if (data?.errors?.formErrors)

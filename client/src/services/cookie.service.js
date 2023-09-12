@@ -6,6 +6,7 @@ const isCountdown = 'isCountdown'
 const isCounting = 'isCounting'
 const startTime = 'startTime'
 const countdownInitialTime = 'countdownInitialTime'
+const cookieConsent = 'cookieConsent'
 
 class CookieService {
   findCookie(name) {
@@ -31,6 +32,14 @@ class CookieService {
 
   getTheme() {
     return this.findCookie(theme)
+  }
+
+  getCookieConsent() {
+    return this.findCookie(cookieConsent)
+  }
+
+  setCookieConsent(value) {
+    this.setCookie(cookieConsent, value ? 'true' : '')
   }
 
   setCurrentRecordTime(time) {
@@ -74,6 +83,7 @@ class CookieService {
   }
 
   deleteAllCookies(except = []) {
+    except.push(cookieConsent)
     const cookies = document.cookie.split(';')
 
     for (let i = 0; i < cookies.length; i++) {
