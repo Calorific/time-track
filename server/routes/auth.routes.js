@@ -17,7 +17,7 @@ const authRouter = express.Router({
 authRouter.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Methods', 'POST')
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type')
-  res.setHeader('Access-Control-Allow-Origin', 'http://77.223.97.42')
+  res.setHeader('Access-Control-Allow-Origin', 'https://77.223.97.42')
   res.setHeader('Access-Control-Allow-Credentials', 'true')
   next()
 })
