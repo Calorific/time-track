@@ -15,8 +15,9 @@ const app = express()
 app.use(cookieParser(config.get('cookieSecretKey')))
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
-app.use(cors({ credentials: true, origin: 'http://localhost:3000' }))
+app.use(cors({ credentials: true, origin: 'https://77.223.97.42' }))
 
+const keepCookies = ['cookieConsent', 'theme']
 
 app.use('/api/v1', router)
 
@@ -26,6 +27,9 @@ if (process.env.NODE_ENV === 'production') {
   const indexPath = path.resolve(dirname, 'client', 'index.html')
 
   app.get('*', (req, res) => {
+    if (req.cookies.keepLoggedIn !== 'true')
+      Object.keys(req.cookies).forEach(c => !keepCookies.includes(c) ? res.clearCookie(c) : 0)
+
     res.sendFile(indexPath)
   })
 }

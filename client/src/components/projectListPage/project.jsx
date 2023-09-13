@@ -31,6 +31,7 @@ const Project = ({ project }) => {
     setIsDeleting(true)
     toast(t => <ToastUndoDelete t={t} onDelete={onProjectDelete} onCancel={onCancel} text='Проект удален' />, {
       duration: 5000,
+      position: 'bottom-center'
     })
   }
 

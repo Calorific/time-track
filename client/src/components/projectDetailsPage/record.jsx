@@ -24,6 +24,7 @@ const Record = ({ record, projectId }) => {
     dispatch(deletingRecord({ projectId, recordId: record._id }))
     toast(t => <ToastUndoDelete t={t} onDelete={onRecordDelete} onCancel={onCancel} text='Запись удалена' />, {
       duration: 5000,
+      position: 'bottom-center'
     })
   }
 

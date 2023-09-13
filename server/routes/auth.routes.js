@@ -17,7 +17,7 @@ const authRouter = express.Router({
 authRouter.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Methods', 'POST')
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type')
-  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000')
+  res.setHeader('Access-Control-Allow-Origin', 'http://77.223.97.42')
   res.setHeader('Access-Control-Allow-Credentials', 'true')
   next()
 })
@@ -49,9 +49,9 @@ authRouter.post('/signup', [
       const refreshToken = await tokenService.generateRefreshToken({ _id: newUser._id.toString() })
       await tokenService.save(newUser._id.toString(), refreshToken)
 
-      res.cookie('accessToken', accessToken, { domain: 'localhost', path: '/', maxAge: +config.get('accessKeyExpiresMS') })
-      res.cookie('refreshToken', refreshToken, { httpOnly: true, domain: 'localhost', path: '/' })
-      res.cookie('keepLoggedIn', true, { domain: 'localhost', path: '/' })
+      res.cookie('accessToken', accessToken, { path: '/', maxAge: +config.get('accessKeyExpiresMS') })
+      res.cookie('refreshToken', refreshToken, { httpOnly: true, path: '/' })
+      res.cookie('keepLoggedIn', true, { path: '/' })
 
       const user = clearUserFields(newUser)
 
@@ -87,14 +87,14 @@ authRouter.post('/login', [
         })
 
       if (keepLoggedIn)
-        res.cookie('keepLoggedIn', true, { domain: 'localhost', path: '/' })
+        res.cookie('keepLoggedIn', true, { path: '/' })
 
       const accessToken = await tokenService.generateAccessToken({ _id: dbUser._id })
-      res.cookie('accessToken', accessToken, { domain: 'localhost', path: '/', maxAge: +config.get('accessKeyExpiresMS') })
+      res.cookie('accessToken', accessToken, { path: '/', maxAge: +config.get('accessKeyExpiresMS') })
 
       const { refreshToken } = await tokenService.findToken({ _id: dbUser._id.toString() })
 
-      res.cookie('refreshToken', refreshToken, { httpOnly: true, domain: 'localhost', path: '/' })
+      res.cookie('refreshToken', refreshToken, { httpOnly: true, path: '/' })
 
       const user = clearUserFields(dbUser)
       return res.status(200).json(user)
@@ -132,7 +132,7 @@ authRouter.post('/refresh', async (req, res) => {
 
     const accessToken = await tokenService.generateAccessToken({ _id: data._id })
 
-    res.cookie('accessToken', accessToken, { domain: 'localhost', path: '/' })
+    res.cookie('accessToken', accessToken, { path: '/' })
     return res.status(201).json({})
   } catch (e) {
     console.log(chalk.red('[SERVER ERROR POST /auth/refresh]', e.message))

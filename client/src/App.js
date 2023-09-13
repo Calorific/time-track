@@ -5,13 +5,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import { loadCurrentUserData, getCurrentUser } from './store/user'
 import cookieService from './services/cookie.service'
 import Loader from './components/common/app/loader'
-import 'preline'
-import authService from './services/auth.service'
 import { logOut } from './store/auth'
-import withToastErrors from './components/hoc/withToastErrors'
 import serverErrors from './serverErrors'
 import { useTheme } from './hooks/useTheme'
 import { Toaster } from 'react-hot-toast'
+import withToastErrors from './components/hoc/withToastErrors'
 import withCookieConsent from './components/hoc/withCookieConsent'
 
 const App = () => {
@@ -34,24 +32,6 @@ const App = () => {
       }
     })()
   }, [keepLoggedIn, currentUserData, dispatch, navigate])
-
-  useEffect(() => {
-    if (!cookieService.getKeepLoggedIn())
-      dispatch(logOut(navigate))
-  }, [dispatch, navigate])
-
-  useEffect(() => {
-    window.onbeforeunload = () => {
-      cookieService.deleteAllCookies(['theme'])
-      if (!cookieService.getKeepLoggedIn() && cookieService.getAccessToken()) {
-        authService.logOut().then()
-      }
-      return null
-    }
-
-    return () => window.onbeforeunload = null
-  }, [])
-
 
   if (keepLoggedIn && !currentUserData)
     return (

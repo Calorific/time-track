@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { changeCurrentProject, getCurrentProjectId } from '../store/user'
 import SelectField from '../components/common/form/selectField'
@@ -21,7 +21,12 @@ const MainPage = () => {
   const [time, setTime] = useState(computeTime)
   const [selectValue, setSelectValue] = useState(currentProject?._id)
 
-  const options = projects.map(p => ({ value: p._id, label: p.title }))
+  const options = projects.map(p => ({ value: p._id, label: p.title })).reverse()
+
+  useEffect(() => {
+    if (!currentProject)
+      setSelectValue('')
+  }, [currentProject])
 
   const handleChange = async data => {
     setSelectValue(data)
