@@ -11,7 +11,6 @@ export const logInValidations = [
 
 export const signUpValidations = [
   check('name', serverErrors.maxLengthName).isLength({ max: 25 }),
-  check('name', serverErrors.invalidName).matches(/^[A-Za-z\s]+$/),
   check('name').exists().notEmpty().withMessage(serverErrors.nameRequired),
   ...logInValidations,
   check('agree', serverErrors.agreementRequired).custom(agree => agree)
