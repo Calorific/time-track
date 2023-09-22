@@ -15,7 +15,7 @@ const app = express()
 app.use(cookieParser(config.get('cookieSecretKey')))
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
-app.use(cors({ credentials: true, origin: 'http://77.223.97.42' }))
+app.use(cors({ credentials: true, origin: config.get('originUrl') }))
 
 const keepCookies = ['cookieConsent', 'theme']
 

@@ -16,7 +16,6 @@ userRouter.get('/data', auth, async (req, res) => {
   try {
     const dbUser = await User.findOne({ _id: req.userId })
     const user = clearUserFields(dbUser)
-
     return res.status(200).json(user)
   } catch (e) {
     return res.status(404).json(parseErrors(serverErrors.userNotFound, false))

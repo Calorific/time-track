@@ -4,6 +4,8 @@ WORKDIR /app/client
 
 COPY client/package.json /app/client
 
+RUN node --max-old-space-size=4096./node_modules/@angular/cli/bin/ng
+
 RUN npm install
 
 COPY client /app/client
